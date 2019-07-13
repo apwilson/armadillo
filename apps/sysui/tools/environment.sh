@@ -6,10 +6,11 @@
 ###################################################
 # Environment setup
 
-export TREE_ROOT=`git rev-parse --show-toplevel`
+#export TREE_ROOT=`git rev-parse --show-toplevel`
+export TREE_ROOT=`pwd`
 export FUCHSIA_ROOT="$TREE_ROOT/../.."
 
-export DART_SDK="$FUCHSIA_ROOT/out/debug-x86-64/host_x64/dart-sdk"
+export DART_SDK="$FUCHSIA_ROOT/lib/flutter/bin/cache/dart-sdk"
 export PATH="$DART_SDK/bin:$PATH"
 
 
@@ -84,3 +85,5 @@ function sysui_help() {
   echo "cgrep           - search through C/C++ files"
   echo ""
 }
+export PATH="$HOME/.pub-cache/bin:$PATH"
+export PATH="$FUCHSIA_ROOT/lib/flutter/bin:$PATH"
