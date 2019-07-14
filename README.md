@@ -1,10 +1,14 @@
-# armadillo
+# Armadillo
 
+(some nice text and images here that people care about so much)
 
-## instructions:
+## Instructions:
 
-make sure to start android emulator before flutter run
+1. Start android emulator
+2. Run install.sh script
+3. After first run you can simply do "flutter run" in apps/sysui/armadillo
 
+### Manual instructions:
 ```
 ./update_flutter.sh
 ./fix_environment.sh
