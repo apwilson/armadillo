@@ -1,6 +1,7 @@
 # Armadillo
 
-(some nice text and images here that people care about so much)
+Link to APK:
+https://drive.google.com/open?id=1wk02RqHldQ8WPmPbMDvmNrwZPRHMe-mc
 
 ## Instructions:
 
