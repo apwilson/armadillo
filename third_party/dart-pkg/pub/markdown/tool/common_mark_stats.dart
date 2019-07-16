@@ -288,7 +288,7 @@ Map<String, List<CommonMarkTestCase>> _loadCommonMarkSections() {
   var testFile = new File(p.join(_currentDir, _commonMarkTests));
   var testsJson = testFile.readAsStringSync();
 
-  var testArray = JSON.decode(testsJson) as List<Map<String, dynamic>>;
+  var testArray = json.decode(testsJson) as List<Map<String, dynamic>>;
 
   var sections = new Map<String, List<CommonMarkTestCase>>();
 

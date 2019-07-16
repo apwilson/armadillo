@@ -79,14 +79,14 @@ class Schema {
             .transform(new convert.Utf8Decoder())
             .join()
             .then((schemaText) {
-          Map map = convert.JSON.decode(schemaText);
+          Map map = convert.json.decode(schemaText);
           return createSchema(map);
         });
       });
     } else if (uri.scheme == 'file' || uri.scheme == '') {
       return new File(uri.scheme == 'file' ? uri.toFilePath() : schemaUrl)
           .readAsString()
-          .then((text) => createSchema(convert.JSON.decode(text)));
+          .then((text) => createSchema(convert.json.decode(text)));
     } else {
       throw new FormatException(
           "Url schemd must be http, file, or empty: $schemaUrl");
@@ -94,7 +94,7 @@ class Schema {
   }
 
   /// Create a schema from a [data]
-  ///  Typically [data] is result of JSON.decode(jsonSchemaString)
+  ///  Typically [data] is result of json.decode(jsonSchemaString)
   static Future<Schema> createSchema(Map data) =>
       new Schema._fromRootMap(data)._thisCompleter.future;
 
@@ -482,8 +482,7 @@ class Schema {
     if (_root == this) {
       _schemaAssignments.forEach((assignment) => assignment());
       if (_retrievalRequests.isNotEmpty) {
-        Future
-            .wait(_retrievalRequests)
+        Future.wait(_retrievalRequests)
             .then((_) => _thisCompleter.complete(_resolvePath('#')));
       } else {
         _thisCompleter.complete(_resolvePath('#'));

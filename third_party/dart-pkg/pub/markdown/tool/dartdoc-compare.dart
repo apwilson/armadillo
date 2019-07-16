@@ -63,7 +63,7 @@ class DartdocCompare {
     var diffOptions = ["-r", "-B", out_before, out_after];
     var result = Process.runSync("diff", diffOptions, runInShell: true);
     var nlines = "\n".allMatches(result.stdout).length;
-    print("Diff lines: ${ nlines }");
+    print("Diff lines: ${nlines}");
     print("diff ${diffOptions.join(" ")}");
     return result.exitCode == 0;
   }
@@ -94,7 +94,7 @@ class DartdocCompare {
     var dartdoc_pubspec =
         loadYaml(new File(dartdoc_pubspec_path).readAsStringSync());
     // make modifiable copy
-    dartdoc_pubspec = JSON.decode(JSON.encode(dartdoc_pubspec));
+    dartdoc_pubspec = json.decode(JSON.encode(dartdoc_pubspec));
 
     dartdoc_pubspec['dependencies']['markdown'] = {
       'git': {

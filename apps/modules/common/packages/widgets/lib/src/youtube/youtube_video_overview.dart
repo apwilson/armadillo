@@ -36,8 +36,7 @@ class YoutubeVideoOverview extends StatefulWidget {
     Key key,
     @required @ExampleValue(kExampleVideoId) this.videoId,
     @required @ConfigKey('google_api_key') this.apiKey,
-  })
-      : super(key: key) {
+  }) : super(key: key) {
     assert(videoId != null);
     assert(apiKey != null);
   }
@@ -65,7 +64,7 @@ class _YoutubeVideoOverviewState extends State<YoutubeVideoOverview> {
     if (response.statusCode != 200) {
       return null;
     }
-    dynamic jsonData = JSON.decode(response.body);
+    dynamic jsonData = json.decode(response.body);
 
     if (jsonData['items'] is List<Map<String, dynamic>> &&
         jsonData['items'].isNotEmpty) {
@@ -159,7 +158,7 @@ class _YoutubeVideoOverviewState extends State<YoutubeVideoOverview> {
             padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: new Text(
               '${new NumberFormat.decimalPattern().format(_videoData.viewCount)}'
-                  ' views',
+              ' views',
               style: new TextStyle(
                 color: Colors.grey[500],
               ),

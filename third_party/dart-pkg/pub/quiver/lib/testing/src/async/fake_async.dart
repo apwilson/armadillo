@@ -103,7 +103,8 @@ abstract class FakeAsync {
   /// [timeout] lets you set the maximum amount of time the flushing will take.
   /// Throws a [StateError] if the [timeout] is exceeded. The default timeout
   /// is 1 hour. [timeout] is relative to the elapsed time.
-  void flushTimers({Duration timeout: const Duration(hours: 1),
+  void flushTimers(
+      {Duration timeout: const Duration(hours: 1),
       bool flushPeriodicTimers: true});
 
   /// The number of created periodic timers that have not been canceled.
@@ -117,7 +118,7 @@ abstract class FakeAsync {
 }
 
 class _FakeAsync implements FakeAsync {
-  Duration _elapsed = Duration.ZERO;
+  Duration _elapsed = Duration.zero;
   Duration _elapsingTo;
   Queue<Function> _microtasks = new Queue();
   Set<_FakeTimer> _timers = new Set<_FakeTimer>();
@@ -157,7 +158,8 @@ class _FakeAsync implements FakeAsync {
   }
 
   @override
-  void flushTimers({Duration timeout: const Duration(hours: 1),
+  void flushTimers(
+      {Duration timeout: const Duration(hours: 1),
       bool flushPeriodicTimers: true}) {
     final absoluteTimeout = _elapsed + timeout;
     _drainTimersWhile((_FakeTimer timer) {
@@ -181,6 +183,7 @@ class _FakeAsync implements FakeAsync {
     }
     return _zone.runGuarded(() => callback(this));
   }
+
   Zone _zone;
 
   @override
@@ -195,13 +198,14 @@ class _FakeAsync implements FakeAsync {
   int get microtaskCount => _microtasks.length;
 
   ZoneSpecification get _zoneSpec => new ZoneSpecification(
-      createTimer: (_, __, ___, Duration duration, Function callback) {
-    return _createTimer(duration, callback, false);
-  }, createPeriodicTimer: (_, __, ___, Duration duration, Function callback) {
-    return _createTimer(duration, callback, true);
-  }, scheduleMicrotask: (_, __, ___, Function microtask) {
-    _microtasks.add(microtask);
-  });
+          createTimer: (_, __, ___, Duration duration, Function callback) {
+        return _createTimer(duration, callback, false);
+      }, createPeriodicTimer:
+              (_, __, ___, Duration duration, Function callback) {
+        return _createTimer(duration, callback, true);
+      }, scheduleMicrotask: (_, __, ___, Function microtask) {
+        _microtasks.add(microtask);
+      });
 
   _drainTimersWhile(bool predicate(_FakeTimer)) {
     _drainMicrotasks();
@@ -264,7 +268,7 @@ class _FakeTimer implements Timer {
   //     http://www.w3.org/TR/html5/webappapis.html#timer-nesting-level
   // Without some sort of delay this can lead to infinitely looping timers.
   // What do the dart VM and dart2js timers do here?
-  static const _minDuration = Duration.ZERO;
+  static const _minDuration = Duration.zero;
 
   _FakeTimer._(Duration duration, this._callback, this._isPeriodic, this._time)
       : _duration = duration < _minDuration ? _minDuration : duration {

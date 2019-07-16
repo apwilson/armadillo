@@ -36,8 +36,7 @@ class SimulatedPadding extends StatefulWidget {
     this.width,
     this.springDescription: _kDefaultSimulationDesc,
     this.child,
-  })
-      : super(key: key);
+  }) : super(key: key);
 
   @override
   _SimulatedPaddingState createState() => new _SimulatedPaddingState();
@@ -72,9 +71,9 @@ class _SimulatedPaddingState extends TickingState<SimulatedPadding> {
   Widget build(BuildContext context) => new Padding(
         padding: new EdgeInsets.only(
           left:
-              widget.width * _leftSimulation.value.clamp(0.0, double.INFINITY),
+              widget.width * _leftSimulation.value.clamp(0.0, double.infinity),
           right:
-              widget.width * _rightSimulation.value.clamp(0.0, double.INFINITY),
+              widget.width * _rightSimulation.value.clamp(0.0, double.infinity),
         ),
         child: widget.child,
       );

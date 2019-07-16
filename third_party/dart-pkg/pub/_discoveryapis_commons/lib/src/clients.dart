@@ -77,7 +77,7 @@ class ApiRequester {
         if (stringStream != null) {
           return stringStream.join('').then((String bodyString) {
             if (bodyString == '') return null;
-            return JSON.decode(bodyString);
+            return json.decode(bodyString);
           });
         } else {
           throw new client_requests.ApiRequestError(
@@ -170,6 +170,7 @@ class ApiRequester {
       }
       containsQueryParameter = true;
     }
+
     queryParams.forEach((String key, List<String> values) {
       for (var value in values) {
         addQueryParameter(key, value);
@@ -277,11 +278,11 @@ class MultipartMediaUploader {
     // This guarantees us that [_body] cannot contain a valid multipart
     // boundary.
     var bodyHead = '--$_boundary\r\n'
-        "Content-Type: $CONTENT_TYPE_JSON_UTF8\r\n\r\n" +
+            "Content-Type: $CONTENT_TYPE_JSON_UTF8\r\n\r\n" +
         _body +
         '\r\n--$_boundary\r\n'
-        "Content-Type: ${_uploadMedia.contentType}\r\n"
-        "Content-Transfer-Encoding: base64\r\n\r\n";
+            "Content-Type: ${_uploadMedia.contentType}\r\n"
+            "Content-Transfer-Encoding: base64\r\n\r\n";
     var bodyTail = '\r\n--$_boundary--';
 
     var totalLength =
@@ -437,8 +438,7 @@ class ResumableMediaUploader {
           } else {
             fullChunks = chunkStack.removeSublist(0, chunkStack.length - 1);
           }
-          Future
-              .forEach(fullChunks, (c) => _uploadChunkDrained(uploadUri, c))
+          Future.forEach(fullChunks, (c) => _uploadChunkDrained(uploadUri, c))
               .then((_) {
             // All chunks uploaded, we can continue consuming data.
             subscription.resume();
@@ -863,7 +863,7 @@ Future<http.StreamedResponse> _validateResponse(
     // Some error happened, try to decode the response and fetch the error.
     Stream<String> stringStream = _decodeStreamAsText(response);
     if (stringStream != null) {
-      return stringStream.transform(JSON.decoder).first.then((json) {
+      return stringStream.transform(json.decoder).first.then((json) {
         if (json is Map && json['error'] is Map) {
           Map error = json['error'];
           var code = error['code'];

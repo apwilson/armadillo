@@ -80,7 +80,7 @@ class ChartTimer {
    * earliest active timer, post-sweep.
    */
   _sweep() {
-    var time = double.INFINITY;
+    var time = double.infinity;
     for (DoubleLinkedQueueEntry e in _timerQueue) {
       if (e.element._finished) {
         _timerQueue.remove(e);
@@ -99,8 +99,7 @@ class ChartTimer {
    * using a Dart Timer with the delay.
    */
   _step([num delta = 0]) {
-    var now = _mark(),
-        delay = _sweep() - now;
+    var now = _mark(), delay = _sweep() - now;
 
     if (delay > 24) {
       // If delay is infinity there's no more timer in queue.
@@ -112,11 +111,9 @@ class ChartTimer {
       }
       _interval = false;
       activeTimer = null;
-    }
-    else {
+    } else {
       _interval = true;
       window.animationFrame.then(_step);
     }
   }
 }
-

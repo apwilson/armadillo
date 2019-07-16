@@ -28,7 +28,7 @@ class GoogleSearchAPI {
     if (response.statusCode != 200) {
       return null;
     }
-    dynamic results = JSON.decode(response.body);
+    dynamic results = json.decode(response.body);
     return results['items']
         .map((dynamic item) => item['image']['thumbnailLink'])
         .toList();

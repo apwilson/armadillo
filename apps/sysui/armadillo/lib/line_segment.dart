@@ -61,9 +61,8 @@ class LineSegment extends PanelDragTarget {
     this.name,
     bool initiallyTargetable: true,
     this.directionallyTargetable: false,
-    this.validityDistance: double.INFINITY,
-  })
-      : this.a = (a.dx < b.dx || a.dy < b.dy) ? a : b,
+    this.validityDistance: double.infinity,
+  })  : this.a = (a.dx < b.dx || a.dy < b.dy) ? a : b,
         this.b = (a.dx < b.dx || a.dy < b.dy) ? b : a,
         super(
           onHover: onHover,
@@ -87,7 +86,7 @@ class LineSegment extends PanelDragTarget {
     String name,
     bool initiallyTargetable: true,
     bool directionallyTargetable: false,
-    double validityDistance: double.INFINITY,
+    double validityDistance: double.infinity,
   }) =>
       new LineSegment(
         new Offset(x, top),
@@ -114,7 +113,7 @@ class LineSegment extends PanelDragTarget {
     String name,
     bool initiallyTargetable: true,
     bool directionallyTargetable: false,
-    double validityDistance: double.INFINITY,
+    double validityDistance: double.infinity,
   }) =>
       new LineSegment(
         new Offset(left, y),
@@ -231,7 +230,7 @@ class LineSegment extends PanelDragTarget {
   }
 
   @override
-  Widget build({bool highlighted: false}) => validityDistance != double.INFINITY
+  Widget build({bool highlighted: false}) => validityDistance != double.infinity
       ? new Stack(
           fit: StackFit.passthrough,
           children: <Widget>[

@@ -66,8 +66,7 @@ class SuggestionList extends StatefulWidget {
     this.onAskingStarted,
     this.onAskingEnded,
     this.onSuggestionSelected,
-  })
-      : super(key: key);
+  }) : super(key: key);
 
   @override
   SuggestionListState createState() => new SuggestionListState();
@@ -150,79 +149,77 @@ class SuggestionListState extends State<SuggestionList>
         initialEntries: <OverlayEntry>[
           new OverlayEntry(
             builder: (BuildContext context) => new LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) =>
-                      new PhysicalModel(
-                        elevation: Elevations.suggestionList,
-                        color: Colors.white,
-                        borderRadius: const BorderRadius.only(
-                          topLeft: const Radius.circular(8.0),
-                          topRight: const Radius.circular(8.0),
-                        ),
-                        child: new ScopedModelDescendant<SuggestionModel>(
-                          builder: (
-                            BuildContext context,
-                            Widget child,
-                            SuggestionModel suggestionModel,
-                          ) {
-                            _lastBuildTime = new DateTime.now();
-                            _fadeInAnimation.value = 0.0;
-                            _fadeInAnimation.forward();
-                            List<Suggestion> suggestions =
-                                suggestionModel.suggestions;
-                            return new Stack(
-                              children: <Widget>[
-                                // We overlap a little to avoid aliasing issues.
-                                new Positioned.fill(
-                                  top: kAskHeight - 8.0,
-                                  child: new Container(
-                                    color: const Color(0xFFDBE2E5),
-                                    padding: new EdgeInsets.only(
-                                      top: 32.0,
-                                    ),
-                                    child: new CustomScrollView(
-                                      controller: widget.scrollController,
-                                      slivers: <Widget>[
-                                        new SliverGrid(
-                                          gridDelegate:
-                                              new _SuggestionListSliverGridDelegate(
-                                            suggestions: suggestions,
-                                          ),
-                                          delegate:
-                                              new SliverChildBuilderDelegate(
-                                            (BuildContext context, int index) =>
-                                                _createSuggestion(
-                                                  suggestions[index],
-                                                ),
-                                            childCount: suggestions.length,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+              builder: (BuildContext context, BoxConstraints constraints) =>
+                  new PhysicalModel(
+                elevation: Elevations.suggestionList,
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(
+                  topLeft: const Radius.circular(8.0),
+                  topRight: const Radius.circular(8.0),
+                ),
+                child: new ScopedModelDescendant<SuggestionModel>(
+                  builder: (
+                    BuildContext context,
+                    Widget child,
+                    SuggestionModel suggestionModel,
+                  ) {
+                    _lastBuildTime = new DateTime.now();
+                    _fadeInAnimation.value = 0.0;
+                    _fadeInAnimation.forward();
+                    List<Suggestion> suggestions = suggestionModel.suggestions;
+                    return new Stack(
+                      children: <Widget>[
+                        // We overlap a little to avoid aliasing issues.
+                        new Positioned.fill(
+                          top: kAskHeight - 8.0,
+                          child: new Container(
+                            color: const Color(0xFFDBE2E5),
+                            padding: new EdgeInsets.only(
+                              top: 32.0,
+                            ),
+                            child: new CustomScrollView(
+                              controller: widget.scrollController,
+                              slivers: <Widget>[
+                                new SliverGrid(
+                                  gridDelegate:
+                                      new _SuggestionListSliverGridDelegate(
+                                    suggestions: suggestions,
                                   ),
-                                ),
-                                new Positioned(
-                                  left: 0.0,
-                                  right: 0.0,
-                                  top: 0.0,
-                                  height: kAskHeight,
-                                  child: new Container(
-                                    decoration: new BoxDecoration(
-                                      color: Colors.white,
+                                  delegate: new SliverChildBuilderDelegate(
+                                    (BuildContext context, int index) =>
+                                        _createSuggestion(
+                                      suggestions[index],
                                     ),
-                                    padding: new EdgeInsets.symmetric(
-                                      horizontal: _getLeftOffset(
-                                        constraints.maxWidth,
-                                      ),
-                                    ),
-                                    child: _buildAsk(context),
+                                    childCount: suggestions.length,
                                   ),
                                 ),
                               ],
-                            );
-                          },
+                            ),
+                          ),
                         ),
-                      ),
+                        new Positioned(
+                          left: 0.0,
+                          right: 0.0,
+                          top: 0.0,
+                          height: kAskHeight,
+                          child: new Container(
+                            decoration: new BoxDecoration(
+                              color: Colors.white,
+                            ),
+                            padding: new EdgeInsets.symmetric(
+                              horizontal: _getLeftOffset(
+                                constraints.maxWidth,
+                              ),
+                            ),
+                            child: _buildAsk(context),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
+              ),
+            ),
           ),
         ],
       );
@@ -247,7 +244,7 @@ class SuggestionListState extends State<SuggestionList>
               child: new Material(
                 color: Colors.transparent,
                 child: new TextField(
-                  decoration: new InputDecoration(hideDivider: true),
+                  decoration: new InputDecoration(),
                   style: new TextStyle(
                     fontSize: 16.0,
                     color: Colors.grey[600],
@@ -402,6 +399,12 @@ class _SuggestionListSliverGridLayout extends SliverGridLayout {
       mainAxisExtent: mainAxisExtent,
       crossAxisExtent: crossAxisExtent,
     );
+  }
+
+  @override
+  double computeMaxScrollOffset(int childCount) {
+    print('APW Dummy implementation!  Review!');
+    return double.infinity;
   }
 
   /// An estimate of the scroll extent needed to fully display all the tiles if

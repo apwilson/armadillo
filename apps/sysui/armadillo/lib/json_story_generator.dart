@@ -17,7 +17,7 @@ const String _kJsonUrl = 'packages/armadillo/res/stories.json';
 /// Creates stories from a JSON file.
 class JsonStoryGenerator extends StoryGenerator {
   final Set<VoidCallback> _listeners = new Set<VoidCallback>();
-  List<StoryCluster> _storyClusters = <StoryCluster>[];
+  var _storyClusters = <StoryCluster>[];
 
   @override
   void addListener(VoidCallback listener) {
@@ -35,12 +35,11 @@ class JsonStoryGenerator extends StoryGenerator {
   /// Loads stories from the JSON file [_kJsonUrl] contained in [assetBundle].
   void load(AssetBundle assetBundle) {
     assetBundle.loadString(_kJsonUrl).then((String json) {
-      final Map<String, List<Map<String, Object>>> decodedJson =
-          convert.JSON.decode(json);
+      final Map<dynamic, dynamic> decodedJson = convert.json.decode(json);
 
       // Load stories
       _storyClusters = decodedJson["stories"]
-          .map((Map<String, Object> story) => new StoryCluster(stories: <Story>[
+          .map<StoryCluster>((story) => new StoryCluster(stories: <Story>[
                 storyBuilder(story),
               ]))
           .toList();

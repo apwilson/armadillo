@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sysui_widgets/default_bundle.dart';
@@ -74,17 +75,19 @@ Future<Null> main() async {
 
   VolumeModel volumeModel = new DummyVolumeModel();
 
-  Widget app = _buildApp(
-    suggestionModel: jsonSuggestionModel,
-    storyModel: storyModel,
-    nowModel: nowModel,
-    storyClusterDragStateModel: storyClusterDragStateModel,
-    storyRearrangementScrimModel: storyRearrangementScrimModel,
-    storyDragTransitionModel: storyDragTransitionModel,
-    debugModel: debugModel,
-    panelResizingModel: panelResizingModel,
-    contextModel: contextModel,
-    volumeModel: volumeModel,
+  Widget app = MaterialApp(
+    home: _buildApp(
+      suggestionModel: jsonSuggestionModel,
+      storyModel: storyModel,
+      nowModel: nowModel,
+      storyClusterDragStateModel: storyClusterDragStateModel,
+      storyRearrangementScrimModel: storyRearrangementScrimModel,
+      storyDragTransitionModel: storyDragTransitionModel,
+      debugModel: debugModel,
+      panelResizingModel: panelResizingModel,
+      contextModel: contextModel,
+      volumeModel: volumeModel,
+    ),
   );
 
   runApp(_kShowPerformanceOverlay ? _buildPerformanceOverlay(child: app) : app);

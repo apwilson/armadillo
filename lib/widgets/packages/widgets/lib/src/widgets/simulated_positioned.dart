@@ -24,8 +24,7 @@ class SimulatedDragEndDetails extends DragEndDetails {
     Velocity velocity,
     double primaryVelocity,
     this.offset: Offset.zero,
-  })
-      : super(
+  }) : super(
           velocity: velocity,
           primaryVelocity: primaryVelocity,
         );
@@ -71,8 +70,7 @@ class SimulatedPositioned extends StatefulWidget {
     this.onDragEnd,
     this.onRectReached,
     DragOffsetTransform dragOffsetTransform,
-  })
-      : this.initRect = initRect ?? rect,
+  })  : this.initRect = initRect ?? rect,
         this.dragOffsetTransform =
             dragOffsetTransform ?? _kDirectDragOffsetTransform,
         super(key: key) {
@@ -110,7 +108,7 @@ class SimulatedPositioned extends StatefulWidget {
   State<SimulatedPositioned> createState() => new _SimulatedPositionedState();
 
   @override
-  void debugFillProperties(List<DiagnosticsNode> description) {
+  void debugFillProperties(DiagnosticPropertiesBuilder description) {
     super.debugFillProperties(description);
     description.add(new DiagnosticsProperty<Widget>('child', child));
     description.add(new DiagnosticsProperty<Rect>('rect', rect));
@@ -236,7 +234,7 @@ class _SimulatedPositionedState extends State<SimulatedPositioned>
 
 const SpringDescription _kSimSpringDescription = const SpringDescription(
   mass: 1.0,
-  springConstant: 120.0,
+  stiffness: 120.0,
   damping: 19.0,
 );
 
@@ -250,8 +248,7 @@ class _SimAnimationController extends Animation<Offset>
     Offset position: Offset.zero,
     Offset velocity: Offset.zero,
     @required TickerProvider vsync,
-  })
-      : _status = AnimationStatus.dismissed {
+  }) : _status = AnimationStatus.dismissed {
     assert(vsync != null);
     assert(position != null);
     assert(velocity != null);
@@ -331,7 +328,7 @@ class _SimAnimationController extends Animation<Offset>
     Duration lastElapsedDuration = elapsed;
     final double elapsedInSeconds =
         lastElapsedDuration.inMicroseconds.toDouble() /
-            Duration.MICROSECONDS_PER_SECOND;
+            Duration.microsecondsPerSecond;
     _value = new Offset(
       _xSimulation.x(elapsedInSeconds),
       _ySimulation.x(elapsedInSeconds),

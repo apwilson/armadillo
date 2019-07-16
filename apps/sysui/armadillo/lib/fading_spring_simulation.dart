@@ -78,7 +78,7 @@ class FadingSpringSimulation {
       return;
     }
     _ticker = tickerProvider.createTicker(_onTick);
-    _lastTick = Duration.ZERO;
+    _lastTick = Duration.zero;
     _ticker.start();
   }
 

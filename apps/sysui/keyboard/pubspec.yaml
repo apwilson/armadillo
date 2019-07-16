@@ -3,6 +3,10 @@
 # found in the LICENSE file.
 
 name: keyboard
+
+environment:
+  sdk: "<3.0.0"
+
 dependencies:
   flutter:
     sdk: flutter

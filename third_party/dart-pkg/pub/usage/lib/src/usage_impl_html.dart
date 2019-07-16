@@ -56,7 +56,7 @@ class HtmlPersistentProperties extends PersistentProperties {
   HtmlPersistentProperties(String name) : super(name) {
     String str = window.localStorage[name];
     if (str == null || str.isEmpty) str = '{}';
-    _map = JSON.decode(str);
+    _map = json.decode(str);
   }
 
   dynamic operator [](String key) => _map[key];

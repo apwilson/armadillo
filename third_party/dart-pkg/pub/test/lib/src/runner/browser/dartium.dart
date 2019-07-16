@@ -39,9 +39,14 @@ class Dartium extends Browser {
       var tryPort = ([int port]) async {
         var dir = createTempDir();
         var args = [
-          "--user-data-dir=$dir", url.toString(), "--disable-extensions",
-          "--disable-popup-blocking", "--bwsi", "--no-first-run",
-          "--no-default-browser-check", "--disable-default-apps",
+          "--user-data-dir=$dir",
+          url.toString(),
+          "--disable-extensions",
+          "--disable-popup-blocking",
+          "--bwsi",
+          "--no-first-run",
+          "--no-default-browser-check",
+          "--disable-default-apps",
           "--disable-translate"
         ];
 
@@ -116,7 +121,7 @@ class Dartium extends Browser {
   }
 
   Dartium._(Future<Process> startBrowser(), this.observatoryUrl,
-          this.remoteDebuggerUrl)
+      this.remoteDebuggerUrl)
       : super(startBrowser);
 
   /// Starts a new instance of Dartium open to the given [url], which may be a
@@ -148,8 +153,8 @@ class Dartium extends Browser {
         return null;
       }
 
-      var dartium = p.join(
-          dir, "chromium/Chromium.app/Contents/MacOS/Chromium");
+      var dartium =
+          p.join(dir, "chromium/Chromium.app/Contents/MacOS/Chromium");
       return new File(dartium).existsSync() ? dartium : null;
     }
 
@@ -176,11 +181,8 @@ class Dartium extends Browser {
       return match == null ? null : Uri.parse(match[1]);
     }).where((line) => line != null));
 
-    var operations = [
-      urlQueue.next,
-      urlQueue.next,
-      urlQueue.next
-    ].map((future) => _checkObservatoryUrl(future));
+    var operations = [urlQueue.next, urlQueue.next, urlQueue.next]
+        .map((future) => _checkObservatoryUrl(future));
 
     urlQueue.cancel();
 
@@ -228,16 +230,12 @@ class Dartium extends Browser {
           "id": "0"
         }));
 
-        webSocket.add(JSON.encode({
-          "jsonrpc": "2.0",
-          "method": "getVM",
-          "params": {},
-          "id": "1"
-        }));
+        webSocket.add(JSON.encode(
+            {"jsonrpc": "2.0", "method": "getVM", "params": {}, "id": "1"}));
 
         webSocket.listen((response) {
           try {
-            response = JSON.decode(response);
+            response = json.decode(response);
           } on FormatException catch (_) {
             giveUp();
             return;

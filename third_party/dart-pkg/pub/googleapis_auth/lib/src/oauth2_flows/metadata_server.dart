@@ -75,7 +75,7 @@ class MetadataServerAuthorizationFlow {
 
   Future<Map> _getToken() {
     return _client.get(_tokenUrl, headers: _HEADERS).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     });
   }
 

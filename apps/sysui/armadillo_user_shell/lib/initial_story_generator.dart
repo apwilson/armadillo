@@ -36,7 +36,7 @@ class InitialStoryGenerator {
   }
 
   void _parseJson(String json) {
-    _decodedJson = JSON.decode(json);
+    _decodedJson = json.decode(json);
 
     _loaded = true;
     if (_storyCreationPending) {

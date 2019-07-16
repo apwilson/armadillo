@@ -61,8 +61,7 @@ class IconSlider extends StatefulWidget {
     this.label,
     this.activeColor,
     this.thumbImage,
-  })
-      : super(key: key) {
+  }) : super(key: key) {
     assert(value != null);
     assert(min != null);
     assert(max != null);
@@ -221,7 +220,7 @@ final Tween<double> _kLabelBalloonRadiusTween =
     new Tween<double>(begin: _kThumbRadius, end: _kLabelBalloonRadius);
 final Tween<double> _kLabelBalloonTipTween =
     new Tween<double>(begin: 0.0, end: -8.0);
-final double _kLabelBalloonTipAttachmentRatio = math.sin(math.PI / 4.0);
+final double _kLabelBalloonTipAttachmentRatio = math.sin(math.pi / 4.0);
 
 const double _kAdjustmentUnit =
     0.1; // Matches iOS implementation of material slider.
@@ -236,8 +235,7 @@ BoxConstraints _getAdditionalConstraints(String label) {
       height: 2 * _kReactionRadius + _getAdditionalHeightForLabel(label));
 }
 
-class _RenderIconSlider extends RenderConstrainedBox
-    implements SemanticsActionHandler {
+class _RenderIconSlider extends RenderConstrainedBox {
   _RenderIconSlider({
     double value,
     int divisions,
@@ -248,8 +246,7 @@ class _RenderIconSlider extends RenderConstrainedBox
     ImageConfiguration configuration,
     this.onChanged,
     TickerProvider vsync,
-  })
-      : _value = value,
+  })  : _value = value,
         _divisions = divisions,
         _activeColor = activeColor,
         _textTheme = textTheme,
@@ -267,12 +264,11 @@ class _RenderIconSlider extends RenderConstrainedBox
       vsync: vsync,
     );
     _reaction = new CurvedAnimation(
-        parent: _reactionController,
-        curve: Curves.fastOutSlowIn)..addListener(markNeedsPaint);
+        parent: _reactionController, curve: Curves.fastOutSlowIn)
+      ..addListener(markNeedsPaint);
     _position = new AnimationController(
-        value: value,
-        duration: _kDiscreteTransitionDuration,
-        vsync: vsync)..addListener(markNeedsPaint);
+        value: value, duration: _kDiscreteTransitionDuration, vsync: vsync)
+      ..addListener(markNeedsPaint);
   }
 
   double get value => _value;
@@ -582,39 +578,11 @@ class _RenderIconSlider extends RenderConstrainedBox
         double imageRadius = thumbRadius - thumbStrokeWidth;
         thumbPainter.paint(
             canvas,
-            thumbCenter -
-                new Offset(imageRadius, imageRadius), // + offset
+            thumbCenter - new Offset(imageRadius, imageRadius), // + offset
             configuration.copyWith(size: new Size.fromRadius(imageRadius)));
       } finally {
         _isPaintingThumb = false;
       }
-    }
-  }
-
-  @override
-  bool get isSemanticBoundary => isInteractive;
-
-  @override
-  SemanticsAnnotator get semanticsAnnotator => _annotate;
-
-  void _annotate(SemanticsNode semantics) {
-    if (isInteractive) semantics.addAdjustmentActions();
-  }
-
-  @override
-  void performAction(SemanticsAction action) {
-    switch (action) {
-      case SemanticsAction.increase:
-        if (isInteractive)
-          onChanged((value + _kAdjustmentUnit).clamp(0.0, 1.0));
-        break;
-      case SemanticsAction.decrease:
-        if (isInteractive)
-          onChanged((value - _kAdjustmentUnit).clamp(0.0, 1.0));
-        break;
-      default:
-        assert(false);
-        break;
     }
   }
 }

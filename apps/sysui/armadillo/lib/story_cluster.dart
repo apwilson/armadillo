@@ -84,8 +84,7 @@ class StoryCluster {
     GlobalKey clusterDraggableKey,
     List<Story> stories,
     this.storyLayout,
-  })
-      : this._stories = stories,
+  })  : this._stories = stories,
         this.title = _getClusterTitle(stories),
         this._lastInteraction = _getClusterLastInteraction(stories),
         this._cumulativeInteractionDuration =
@@ -314,7 +313,7 @@ class StoryCluster {
             });
           }
           return !hadErrors;
-        });
+        }());
         replace(
           panel: panel,
           withPanel: new Panel.fromLTRB(

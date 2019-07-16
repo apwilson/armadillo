@@ -4,10 +4,14 @@
 
 name: util
 description: Utilities
+
+environment:
+  sdk: "<3.0.0"
+
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.14.0
+  intl: any
 dev_dependencies:
   test: any
   flutter_test:

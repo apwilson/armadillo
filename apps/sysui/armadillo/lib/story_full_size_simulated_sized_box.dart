@@ -44,16 +44,16 @@ class StoryFullSizeSimulatedSizedBox extends StatelessWidget {
   Widget build(BuildContext context) => new ScopedModelDescendant<SizeModel>(
         builder: (BuildContext context, Widget child, SizeModel sizeModel) =>
             new SimulatedFractional(
-              key: containerKey,
-              fractionalWidth:
-                  displayMode == DisplayMode.panels ? panel.width : 1.0,
-              fractionalHeight:
-                  ((displayMode == DisplayMode.panels ? panel.height : 1.0) -
-                          (storyBarMaximizedHeight / sizeModel.size.height))
-                      .clamp(0.0, double.INFINITY),
-              size: sizeModel.size,
-              child: child,
-            ),
+          key: containerKey,
+          fractionalWidth:
+              displayMode == DisplayMode.panels ? panel.width : 1.0,
+          fractionalHeight:
+              ((displayMode == DisplayMode.panels ? panel.height : 1.0) -
+                      (storyBarMaximizedHeight / sizeModel.size.height))
+                  .clamp(0.0, double.infinity),
+          size: sizeModel.size,
+          child: child,
+        ),
         child: child,
       );
 }

@@ -97,7 +97,7 @@ class GalleryModuleModel extends ModuleModel {
 
   @override
   void onNotify(String json) {
-    dynamic decoded = JSON.decode(json);
+    dynamic decoded = json.decode(json);
     try {
       _queryString = decoded[_kContract][_kQueryKey];
     } catch (e) {
@@ -123,7 +123,7 @@ class GalleryModuleModel extends ModuleModel {
   /// We assume that the json simply contains the list of urls.
   void handleNotifySelection(String json) {
     if (json != null) {
-      List<String> urls = JSON.decode(json);
+      List<String> urls = json.decode(json);
       if (urls != null) {
         _initialSelection.clear();
         _initialSelection.addAll(urls);

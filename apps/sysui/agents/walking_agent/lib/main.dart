@@ -38,8 +38,7 @@ class WalkingAgent extends AgentImpl {
   /// Constructor.
   WalkingAgent({
     @required ApplicationContext applicationContext,
-  })
-      : super(applicationContext: applicationContext);
+  }) : super(applicationContext: applicationContext);
 
   @override
   Future<Null> onReady(
@@ -65,7 +64,7 @@ class WalkingAgent extends AgentImpl {
         new _ContextListenerImpl(
           proposalPublisher: _proposalPublisher,
           onTopicChanged: (String activityJson) {
-            Map<String, String> activity = JSON.decode(activityJson);
+            Map<String, String> activity = json.decode(activityJson);
             _kWalkingProposals.forEach(_proposalPublisher.remove);
             switch (activity['activity']) {
               case 'walking':

@@ -84,6 +84,7 @@ class SuggestionLayout {
                 (suggestion.description?.isNotEmpty ?? false)
             ? null
             : new TextPainter(
+                textDirection: TextDirection.ltr,
                 text: new TextSpan(
                     style: _kHeadline1Style, text: suggestion.title),
                 textAlign: TextAlign.left,
@@ -92,6 +93,7 @@ class SuggestionLayout {
         _headline2TextPainter = suggestion.title?.isEmpty ?? true
             ? null
             : new TextPainter(
+                textDirection: TextDirection.ltr,
                 text: new TextSpan(
                     style: _kHeadline2Style, text: suggestion.title),
                 textAlign: TextAlign.left,
@@ -100,6 +102,7 @@ class SuggestionLayout {
         _subHeadlineTextPainter = suggestion.description?.isEmpty ?? true
             ? null
             : new TextPainter(
+                textDirection: TextDirection.ltr,
                 text: new TextSpan(
                   style: _kSubHeadlineStyle,
                   text: suggestion.description,

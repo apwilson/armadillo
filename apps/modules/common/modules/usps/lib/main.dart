@@ -66,7 +66,7 @@ class LinkWatcherImpl extends LinkWatcher {
   void notify(String json) {
     _log('LinkWatcherImpl::notify call');
 
-    final dynamic doc = JSON.decode(json);
+    final dynamic doc = json.decode(json);
     try {
       _trackingCode = doc['view']['query parameters']['qtc_tLabels1'];
     } catch (_) {

@@ -109,7 +109,7 @@ class IOPersistentProperties extends PersistentProperties {
       if (!_file.existsSync()) _file.createSync();
       String contents = _file.readAsStringSync();
       if (contents.isEmpty) contents = '{}';
-      _map = JSON.decode(contents);
+      _map = json.decode(contents);
     } catch (_) {
       _map = {};
     }

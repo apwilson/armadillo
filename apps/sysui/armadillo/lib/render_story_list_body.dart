@@ -56,15 +56,14 @@ class RenderStoryListBody extends RenderListBody {
     Color scrimColor,
     double liftScale,
     bool blurScrimmedChildren,
-  })
-      : _parentSize = parentSize,
+  })  : _parentSize = parentSize,
         _scrollOffset = scrollOffset,
         _bottomPadding = bottomPadding ?? 0.0,
         _listHeight = listHeight ?? 0.0,
         _scrimColor = scrimColor ?? new Color(0x00000000),
         _liftScale = liftScale ?? 1.0,
         _blurScrimmedChildren = blurScrimmedChildren ?? _kBlurScrimmedChildren,
-        super(children: children, mainAxis: Axis.vertical);
+        super(children: children, axisDirection: AxisDirection.down);
 
   /// Sets whether the children should be blurred when they are scrimmed.
   set blurScrimmedChildren(bool value) {

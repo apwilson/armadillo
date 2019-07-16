@@ -3,9 +3,9 @@ library graphlib.alg.floyd_warshall;
 import "../graph.dart";
 import "common.dart";
 
-Map<dynamic, Map<dynamic, Path>> floydWarshall(Graph g, [weightFunc weightFn, edgeFunc edgeFn]) {
-  return _runFloydWarshall(g,
-      weightFn == null ? DEFAULT_WEIGHT_FUNC : weightFn,
+Map<dynamic, Map<dynamic, Path>> floydWarshall(Graph g,
+    [weightFunc weightFn, edgeFunc edgeFn]) {
+  return _runFloydWarshall(g, weightFn == null ? DEFAULT_WEIGHT_FUNC : weightFn,
       edgeFn == null ? (v) => g.outEdges(v) : edgeFn);
 }
 
@@ -18,12 +18,11 @@ Map _runFloydWarshall(Graph g, weightFunc weightFn, edgeFunc edgeFn) {
     results[v][v] = new Path(distance: 0);
     nodes.forEach((w) {
       if (v != w) {
-        results[v][w] = new Path(distance: double.INFINITY);
+        results[v][w] = new Path(distance: double.infinity);
       }
     });
     edgeFn(v).forEach((Edge edge) {
-      var w = edge.v == v ? edge.w : edge.v,
-          d = weightFn(edge);
+      var w = edge.v == v ? edge.w : edge.v, d = weightFn(edge);
       results[v][w] = new Path(distance: d, predecessor: v);
     });
   });

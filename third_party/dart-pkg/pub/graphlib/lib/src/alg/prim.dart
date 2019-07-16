@@ -5,14 +5,11 @@ import "../graph.dart" show Graph, Edge;
 import "common.dart";
 
 Graph prim(Graph g, weightFunc weightFn) {
-  final result = new Graph(),
-      parents = {},
-      pq = new PriorityQueue();
+  final result = new Graph(), parents = {}, pq = new PriorityQueue();
   var v;
 
   updateNeighbors(Edge edge) {
-    var w = edge.v == v ? edge.w : edge.v,
-        pri = pq.priority(w);
+    var w = edge.v == v ? edge.w : edge.v, pri = pq.priority(w);
     if (pri != null) {
       var edgeWeight = weightFn(edge);
       if (edgeWeight < pri) {
@@ -27,7 +24,7 @@ Graph prim(Graph g, weightFunc weightFn) {
   }
 
   g.nodes.forEach((v) {
-    pq.add(v, double.INFINITY);
+    pq.add(v, double.infinity);
     result.setNode(v);
   });
 

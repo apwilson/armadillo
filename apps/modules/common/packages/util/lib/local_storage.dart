@@ -73,7 +73,7 @@ class _Store {
     }
 
     String data = await file.readAsString();
-    dynamic dataMap = JSON.decode(data);
+    dynamic dataMap = json.decode(data);
     dataMap.forEach((String k, String v) {
       _map[k] = v;
     });

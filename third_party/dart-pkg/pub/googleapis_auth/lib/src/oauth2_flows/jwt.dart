@@ -72,7 +72,7 @@ class JwtFlow {
     var httpResponse = await _client.send(request);
     var object = await httpResponse.stream
         .transform(UTF8.decoder)
-        .transform(JSON.decoder)
+        .transform(json.decoder)
         .first;
     Map response = object as Map;
     var tokenType = response['token_type'];

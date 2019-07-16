@@ -3,10 +3,10 @@
 # found in the LICENSE file.
 
 name: google_search_api
+
+environment:
+  sdk: "<3.0.0"
+
 dependencies:
   flutter:
     sdk: flutter
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  test: ^0.12.15

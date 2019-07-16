@@ -152,7 +152,7 @@ main(List<String> args) {
   }
 
   completer.future.then((schemaText) {
-    Future schema = Schema.createSchema(convert.JSON.decode(schemaText));
+    Future schema = Schema.createSchema(convert.json.decode(schemaText));
     schema.then((schema) {
       String dot = createDot(schema);
       if (options['out-file'] != null) {

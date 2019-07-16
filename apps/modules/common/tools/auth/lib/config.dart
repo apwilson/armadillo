@@ -34,7 +34,7 @@ Config file does not exist:
     }
 
     String data = await file.readAsString();
-    dynamic json = JSON.decode(data);
+    dynamic json = json.decode(data);
     json.forEach((String key, String value) => this.put(key, value));
   }
 

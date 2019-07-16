@@ -323,10 +323,10 @@ Future<Null> writeWidgetSpecs(String outputDir, WidgetSpecs specs) async {
       .map((DartType generatorType) => <String, String>{
             'generator_declaration':
                 '${_getImportIdPrefixForType(importIdMap, generatorType)}'
-                '${generatorType.name} '
-                '${lowerCamelize(generatorType.name)} = '
-                'new ${_getImportIdPrefixForType(importIdMap, generatorType)}'
-                '${generatorType.name}()',
+                    '${generatorType.name} '
+                    '${lowerCamelize(generatorType.name)} = '
+                    'new ${_getImportIdPrefixForType(importIdMap, generatorType)}'
+                    '${generatorType.name}()',
           })
       .toList();
 
@@ -758,10 +758,10 @@ String _getQualifiedTypeName(
 String _doubleValueToCode(double value) {
   if (value == double.NAN) {
     return 'double.NAN';
-  } else if (value == double.INFINITY) {
-    return 'double.INFINITY';
-  } else if (value == double.NEGATIVE_INFINITY) {
-    return 'double.NEGATIVE_INFINITY';
+  } else if (value == double.infinity) {
+    return 'double.infinity';
+  } else if (value == double.negativeInfinity) {
+    return 'double.negativeInfinity';
   } else if (value == double.MIN_POSITIVE) {
     return 'double.MIN_POSITIVE';
   } else if (value == double.MAX_FINITE) {

@@ -14,12 +14,12 @@ Widget _widgetBuilder(String module, Map<String, Object> state) {
       return new LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) =>
             new Image.asset(
-              (constraints.maxWidth > constraints.maxHeight)
-                  ? state['imageWide'] ?? state['image']
-                  : state['image'],
-              alignment: FractionalOffset.topCenter,
-              fit: BoxFit.cover,
-            ),
+          (constraints.maxWidth > constraints.maxHeight)
+              ? state['imageWide'] ?? state['image']
+              : state['image'],
+          alignment: FractionalOffset.topCenter,
+          fit: BoxFit.cover,
+        ),
       );
     default:
       return new Center(child: new Text('BAD MODULE!!!'));
@@ -29,30 +29,29 @@ Widget _widgetBuilder(String module, Map<String, Object> state) {
 /// Construct a story object from a decoded json story config.
 Story storyBuilder(Map<String, dynamic> story) {
   Map<String, Object> state = story['state'];
-  List<String> icons = story['icons'];
+  List icons = story['icons'];
   return new Story(
     id: new StoryId(story['id']),
     builder: (_) => new DefaultScrollConfiguration(
-          child: _widgetBuilder(story['module'], state),
-        ),
+      child: _widgetBuilder(story['module'], state),
+    ),
     title: story['title']?.toUpperCase(),
     icons: icons
         .map(
-          (String icon) =>
-              (BuildContext context, double opacity) => new Image.asset(
-                    icon,
-                    fit: BoxFit.cover,
-                    color: Colors.white.withOpacity(opacity),
-                  ),
+          (icon) => (BuildContext context, double opacity) => new Image.asset(
+                icon,
+                fit: BoxFit.cover,
+                color: Colors.white.withOpacity(opacity),
+              ),
         )
         .toList(),
     avatar: (_, double opacity) => new Opacity(
-          opacity: opacity,
-          child: new Image.asset(
-            story['avatar'],
-            fit: BoxFit.cover,
-          ),
-        ),
+      opacity: opacity,
+      child: new Image.asset(
+        story['avatar'],
+        fit: BoxFit.cover,
+      ),
+    ),
     lastInteraction: new DateTime.now().subtract(
       new Duration(
         seconds: int.parse(story['lastInteraction']),

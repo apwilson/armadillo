@@ -100,14 +100,14 @@ class StoryListLayout {
         }
       }
       return true;
-    });
+    }());
 
     // Convert the story list into [StoryMetadata]s determining juggling minutes
     // along the way.  See [_kJugglingThresholdMinutes].
     int jugglingStoryCount = 0; // The number of stories being juggled.
 
-    double minImportance = double.INFINITY;
-    double maxImportance = -double.INFINITY;
+    double minImportance = double.infinity;
+    double maxImportance = -double.infinity;
     storyClustersToLayout
         .map((StoryCluster storyCluster) => storyCluster.importance)
         .forEach((double importance) {
@@ -330,9 +330,9 @@ class StoryListLayout {
             previousRow
                 .where(
               (_StoryMetadata storyBelow) => _intersect(
-                    expandedStoryRect,
-                    storyBelow.bounds,
-                  ),
+                expandedStoryRect,
+                storyBelow.bounds,
+              ),
             )
                 .forEach(
               (_StoryMetadata intersectingStory) {
@@ -392,7 +392,7 @@ class StoryListLayout {
 
           // If we've found a story above us...
           if (intersectingStories.isNotEmpty) {
-            double maxTop = double.NEGATIVE_INFINITY;
+            double maxTop = double.negativeInfinity;
             intersectingStories
                 .forEach((_StoryMetadata intersectingStoryAbove) {
               // TODO(apwilson): Should be vertical grid not horizontal.
@@ -416,7 +416,7 @@ class StoryListLayout {
 
   double _smoothstep(double a, double b, double n) {
     double t = (n - a) / (b - a) * 12.0 - 6.0;
-    return 1.0 / (1.0 + math.pow(math.E, -t));
+    return 1.0 / (1.0 + math.pow(math.e, -t));
   }
 
   bool _intersect(Rect r1, Rect r2) {

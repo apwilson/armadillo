@@ -55,7 +55,7 @@ class LinkWatcherImpl extends LinkWatcher {
   void notify(String json) {
     _log('LinkWatcherImpl::notify call');
 
-    final dynamic doc = JSON.decode(json);
+    final dynamic doc = json.decode(json);
     if (doc is! Map ||
         doc[_kYoutubeDocRoot] is! Map ||
         doc[_kYoutubeDocRoot][_kYoutubeVideoIdKey] is! String) {

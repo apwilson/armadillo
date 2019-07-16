@@ -46,7 +46,7 @@ class Config {
     }
 
     try {
-      json = JSON.decode(data);
+      json = json.decode(data);
     } catch (err) {
       String message = 'unable to decode JSON \n$data';
       throw new StateError(message);

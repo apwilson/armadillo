@@ -27,19 +27,19 @@ class ConstraintsModel extends Model {
   /// Parses [json] for the [constraints] it contains.
   void parseJson(String json) {
     final Map<String, List<Map<String, String>>> decodedJson =
-        JSON.decode(json);
+        json.decode(json);
 
     // Load screen sizes.
     _currentConstraints = decodedJson['screen_sizes']
         .map(
           (Map<String, Object> constraint) => new BoxConstraints.tightFor(
-                width: constraint['width'] != null
-                    ? double.parse(constraint['width'])
-                    : null,
-                height: constraint['height'] != null
-                    ? double.parse(constraint['height'])
-                    : null,
-              ),
+            width: constraint['width'] != null
+                ? double.parse(constraint['width'])
+                : null,
+            height: constraint['height'] != null
+                ? double.parse(constraint['height'])
+                : null,
+          ),
         )
         .toList();
     notifyListeners();

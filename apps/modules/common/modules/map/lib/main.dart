@@ -65,7 +65,7 @@ class LinkWatcherImpl extends LinkWatcher {
   void notify(String json) {
     _log('LinkWatcherImpl::notify call $json');
 
-    final dynamic doc = JSON.decode(json);
+    final dynamic doc = json.decode(json);
     if (doc is! Map || doc[_kMapDocRoot] is! Map) {
       _log('No map root found in json.');
       return;

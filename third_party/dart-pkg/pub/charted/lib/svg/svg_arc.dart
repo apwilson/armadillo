@@ -73,12 +73,22 @@ class SvgArc implements SvgPathGenerator {
         delta = ea - sa;
 
     if (delta > _MAX) {
-      return ir > 0 ?
+      return ir > 0
+          ?
           // Concentric circles with area between them
-          "M0,$or" "A$or,$or 0 1,1 0,-$or" "A$or,$or 0 1,1 0,$or"
-          "M0,$ir" "A$ir,$ir 0 1,0 0,-$ir" "A$ir,$ir 0 1,0 0,$ir" "Z" :
+          "M0,$or"
+              "A$or,$or 0 1,1 0,-$or"
+              "A$or,$or 0 1,1 0,$or"
+              "M0,$ir"
+              "A$ir,$ir 0 1,0 0,-$ir"
+              "A$ir,$ir 0 1,0 0,$ir"
+              "Z"
+          :
           // Circle with enclosed area
-          "M0,$or" "A$or,$or 0 1,1 0,-$or" "A$or,$or 0 1,1 0,$or" "Z";
+          "M0,$or"
+              "A$or,$or 0 1,1 0,-$or"
+              "A$or,$or 0 1,1 0,$or"
+              "Z";
     }
 
     var ss = math.sin(sa),
@@ -87,38 +97,48 @@ class SvgArc implements SvgPathGenerator {
         ce = math.cos(ea),
         df = delta < PI ? 0 : 1;
 
-    return ir > 0 ?
+    return ir > 0
+        ?
         // Arc capped at ends with lines
-        "M${or * cs},${or * ss}" "A$or,$or 0 $df,1 ${or * ce},${or * se}"
-        "L${ir * ce},${ir * se}" "A$ir,$ir 0 $df,0 ${ir * cs},${ir * ss}"
-        "Z" :
+        "M${or * cs},${or * ss}"
+            "A$or,$or 0 $df,1 ${or * ce},${or * se}"
+            "L${ir * ce},${ir * se}"
+            "A$ir,$ir 0 $df,0 ${ir * cs},${ir * ss}"
+            "Z"
+        :
         // A circular sector
-        "M${or * cs},${or * ss}" "A$or,$or 0 $df,1 ${or * ce},${or * se}"
-        "L0,0" "Z";
+        "M${or * cs},${or * ss}"
+            "A$or,$or 0 $df,1 ${or * ce},${or * se}"
+            "L0,0"
+            "Z";
   }
 
   List centroid(d, int i, Element e) {
     var r = (innerRadiusCallback(d, i, e) + outerRadiusCallback(d, i, e)) / 2,
         a = (startAngleCallback(d, i, e) + endAngleCallback(d, i, e)) / 2 -
-            math.PI / 2;
+            math.pi / 2;
     return [math.cos(a) * r, math.sin(a) * r];
   }
 
   /** Default [innerRadiusCallback] returns data.innerRadius */
-  static num defaultInnerRadiusCallback(d, i, e) => d is !SvgArcData ||
-      d == null || d.innerRadius == null ? 0 : d.innerRadius;
+  static num defaultInnerRadiusCallback(d, i, e) =>
+      d is! SvgArcData || d == null || d.innerRadius == null
+          ? 0
+          : d.innerRadius;
 
   /** Default [outerRadiusCallback] returns data.outerRadius */
-  static num defaultOuterRadiusCallback(d, i, e) => d is !SvgArcData ||
-      d == null || d.outerRadius == null ? 0 : d.outerRadius;
+  static num defaultOuterRadiusCallback(d, i, e) =>
+      d is! SvgArcData || d == null || d.outerRadius == null
+          ? 0
+          : d.outerRadius;
 
   /** Default [startAngleCallback] returns data.startAngle */
-  static num defaultStartAngleCallback(d, i, e) => d is !SvgArcData ||
-      d == null || d.startAngle == null ? 0 : d.startAngle;
+  static num defaultStartAngleCallback(d, i, e) =>
+      d is! SvgArcData || d == null || d.startAngle == null ? 0 : d.startAngle;
 
   /** Default [endAngleCallback] that returns data.endAngle */
-  static num defaultEndAngleCallback(d, i, e) => d is !SvgArcData ||
-      d == null || d.endAngle == null ? 0 : d.endAngle;
+  static num defaultEndAngleCallback(d, i, e) =>
+      d is! SvgArcData || d == null || d.endAngle == null ? 0 : d.endAngle;
 }
 
 /** Value type for SvgArc as used by default property accessors in SvgArc */
@@ -130,10 +150,9 @@ class SvgArcData {
   num startAngle = 0;
   num endAngle = 2 * PI;
 
-  SvgArcData(this.data, this.value, this.startAngle,
-      this.endAngle, [this.innerRadius=0, this.outerRadius=100]);
+  SvgArcData(this.data, this.value, this.startAngle, this.endAngle,
+      [this.innerRadius = 0, this.outerRadius = 100]);
 }
-
 
 /**
  * Returns the interpolator between two [SvgArcData] [a] and [b].
@@ -152,7 +171,6 @@ InterpolateFn interpolateSvgArcData(SvgArcData a, SvgArcData b) {
       bi = b.innerRadius - ai,
       bo = b.outerRadius - ao;
 
-  return (t) => new SvgArcData(b.data, b.value,
-    (ast + bst * t), (aen + ben * t), (ai + bi * t), (ao + bo * t));
+  return (t) => new SvgArcData(b.data, b.value, (ast + bst * t),
+      (aen + ben * t), (ai + bi * t), (ao + bo * t));
 }
-

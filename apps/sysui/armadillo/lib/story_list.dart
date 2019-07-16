@@ -75,8 +75,7 @@ class StoryList extends StatelessWidget {
     Size parentSize,
     this.onStoryClusterVerticalEdgeHover,
     this.blurScrimmedChildren,
-  })
-      : _sizeModel = new SizeModel(parentSize),
+  })  : _sizeModel = new SizeModel(parentSize),
         super(key: key);
 
   @override
@@ -91,21 +90,21 @@ class StoryList extends StatelessWidget {
           List<Widget> stackChildren = new List<Widget>.from(
             storyModel.inactiveStoryClusters.map(
               (StoryCluster storyCluster) => new Positioned(
-                    width: 0.0,
-                    height: 0.0,
-                    child: new SimulationBuilder(
-                      key: storyCluster.focusSimulationKey,
-                      initValue: 0.0,
-                      targetValue: 1.0,
-                      builder: (BuildContext context, double progress) =>
-                          _createStoryCluster(
-                            storyModel.activeSortedStoryClusters,
-                            storyCluster,
-                            0.0,
-                            storyCluster.buildStoryWidgets(context),
-                          ),
-                    ),
+                width: 0.0,
+                height: 0.0,
+                child: new SimulationBuilder(
+                  key: storyCluster.focusSimulationKey,
+                  initValue: 0.0,
+                  targetValue: 1.0,
+                  builder: (BuildContext context, double progress) =>
+                      _createStoryCluster(
+                    storyModel.activeSortedStoryClusters,
+                    storyCluster,
+                    0.0,
+                    storyCluster.buildStoryWidgets(context),
                   ),
+                ),
+              ),
             ),
           );
 
@@ -156,54 +155,45 @@ class StoryList extends StatelessWidget {
           child: new ScopedModelDescendant<SizeModel>(
             builder: (_, __, SizeModel sizeModel) =>
                 new ScopedModelDescendant<StoryRearrangementScrimModel>(
-                  builder: (
-                    _,
-                    __,
-                    StoryRearrangementScrimModel storyRearrangementScrimModel,
-                  ) =>
-                      new ScopedModelDescendant<StoryDragTransitionModel>(
-                        builder: (
-                          BuildContext context,
-                          _,
-                          StoryDragTransitionModel storyDragTransitionModel,
-                        ) =>
-                            new AnimatedBuilder(
-                              animation: scrollController,
-                              builder: (BuildContext context, Widget child) =>
-                                  new _StoryListBody(
-                                    children: new List<Widget>.generate(
-                                      storyModel
-                                          .activeSortedStoryClusters.length,
-                                      (int index) =>
-                                          _createFocusableStoryCluster(
-                                            context,
-                                            storyModel
-                                                .activeSortedStoryClusters,
-                                            storyModel
-                                                    .activeSortedStoryClusters[
-                                                index],
-                                            storyModel
-                                                .activeSortedStoryClusters[
-                                                    index]
-                                                .buildStoryWidgets(
-                                              context,
-                                            ),
-                                          ),
-                                    ),
-                                    listHeight: storyModel.listHeight,
-                                    scrollOffset:
-                                        scrollController?.offset ?? 0.0,
-                                    bottomPadding: bottomPadding,
-                                    parentSize: sizeModel.size,
-                                    scrimColor:
-                                        storyRearrangementScrimModel.scrimColor,
-                                    blurScrimmedChildren: blurScrimmedChildren,
-                                    storyDragTransitionModelProgress:
-                                        storyDragTransitionModel.progress,
-                                  ),
-                            ),
+              builder: (
+                _,
+                __,
+                StoryRearrangementScrimModel storyRearrangementScrimModel,
+              ) =>
+                  new ScopedModelDescendant<StoryDragTransitionModel>(
+                builder: (
+                  BuildContext context,
+                  _,
+                  StoryDragTransitionModel storyDragTransitionModel,
+                ) =>
+                    new AnimatedBuilder(
+                  animation: scrollController,
+                  builder: (BuildContext context, Widget child) =>
+                      new _StoryListBody(
+                    children: new List<Widget>.generate(
+                      storyModel.activeSortedStoryClusters.length,
+                      (int index) => _createFocusableStoryCluster(
+                        context,
+                        storyModel.activeSortedStoryClusters,
+                        storyModel.activeSortedStoryClusters[index],
+                        storyModel.activeSortedStoryClusters[index]
+                            .buildStoryWidgets(
+                          context,
+                        ),
                       ),
+                    ),
+                    listHeight: storyModel.listHeight,
+                    scrollOffset: scrollController?.offset ?? 0.0,
+                    bottomPadding: bottomPadding,
+                    parentSize: sizeModel.size,
+                    scrimColor: storyRearrangementScrimModel.scrimColor,
+                    blurScrimmedChildren: blurScrimmedChildren,
+                    storyDragTransitionModelProgress:
+                        storyDragTransitionModel.progress,
+                  ),
                 ),
+              ),
+            ),
           ),
         ),
       );
@@ -224,38 +214,35 @@ class StoryList extends StatelessWidget {
           double inlinePreviewHintScaleProgress,
         ) =>
             new SimulationBuilder(
-              key: storyCluster.inlinePreviewScaleSimulationKey,
-              springDescription: _kInlinePreviewSimulationDesc,
-              initValue: 0.0,
-              targetValue: 0.0,
-              builder: (BuildContext context,
-                      double inlinePreviewScaleProgress) =>
-                  new SimulationBuilder(
-                    key: storyCluster.focusSimulationKey,
-                    initValue: 0.0,
-                    targetValue: 0.0,
-                    onSimulationChanged: (double focusProgress, bool isDone) {
-                      if (focusProgress == 1.0 && isDone) {
-                        onStoryClusterFocusCompleted?.call(storyCluster);
-                      }
-                    },
-                    builder: (BuildContext context, double focusProgress) =>
-                        new _StoryListChild(
-                          storyLayout: storyCluster.storyLayout,
-                          focusProgress: focusProgress,
-                          inlinePreviewScaleProgress:
-                              inlinePreviewScaleProgress,
-                          inlinePreviewHintScaleProgress:
-                              inlinePreviewHintScaleProgress,
-                          child: _createStoryCluster(
-                            storyClusters,
-                            storyCluster,
-                            focusProgress,
-                            storyWidgets,
-                          ),
-                        ),
-                  ),
+          key: storyCluster.inlinePreviewScaleSimulationKey,
+          springDescription: _kInlinePreviewSimulationDesc,
+          initValue: 0.0,
+          targetValue: 0.0,
+          builder: (BuildContext context, double inlinePreviewScaleProgress) =>
+              new SimulationBuilder(
+            key: storyCluster.focusSimulationKey,
+            initValue: 0.0,
+            targetValue: 0.0,
+            onSimulationChanged: (double focusProgress, bool isDone) {
+              if (focusProgress == 1.0 && isDone) {
+                onStoryClusterFocusCompleted?.call(storyCluster);
+              }
+            },
+            builder: (BuildContext context, double focusProgress) =>
+                new _StoryListChild(
+              storyLayout: storyCluster.storyLayout,
+              focusProgress: focusProgress,
+              inlinePreviewScaleProgress: inlinePreviewScaleProgress,
+              inlinePreviewHintScaleProgress: inlinePreviewHintScaleProgress,
+              child: _createStoryCluster(
+                storyClusters,
+                storyCluster,
+                focusProgress,
+                storyWidgets,
+              ),
             ),
+          ),
+        ),
       );
 
   Widget _createStoryCluster(
@@ -323,8 +310,7 @@ class _StoryListBody extends MultiChildRenderObjectWidget {
     Color scrimColor,
     bool blurScrimmedChildren,
     double storyDragTransitionModelProgress,
-  })
-      : _scrollOffset = scrollOffset,
+  })  : _scrollOffset = scrollOffset,
         _bottomPadding = bottomPadding,
         _listHeight = listHeight,
         _parentSize = parentSize,
@@ -355,7 +341,7 @@ class _StoryListBody extends MultiChildRenderObjectWidget {
     RenderStoryListBody renderObject,
   ) {
     renderObject
-      ..mainAxis = Axis.vertical
+      ..axisDirection = AxisDirection.down
       ..parentSize = _parentSize
       ..scrollOffset = _scrollOffset
       ..bottomPadding = _bottomPadding
@@ -382,8 +368,7 @@ class _StoryListChild extends ParentDataWidget<_StoryListBody> {
     double focusProgress,
     double inlinePreviewScaleProgress,
     double inlinePreviewHintScaleProgress,
-  })
-      : _storyLayout = storyLayout,
+  })  : _storyLayout = storyLayout,
         _focusProgress = focusProgress,
         _inlinePreviewScaleProgress = inlinePreviewScaleProgress,
         _inlinePreviewHintScaleProgress = inlinePreviewHintScaleProgress,
@@ -401,7 +386,7 @@ class _StoryListChild extends ParentDataWidget<_StoryListBody> {
   }
 
   @override
-  void debugFillProperties(List<DiagnosticsNode> description) {
+  void debugFillProperties(DiagnosticPropertiesBuilder description) {
     super.debugFillProperties(description);
     description.add(
       new DiagnosticsProperty<StoryLayout>(

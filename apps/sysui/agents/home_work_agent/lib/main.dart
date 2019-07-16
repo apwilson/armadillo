@@ -42,8 +42,7 @@ class HomeWorkAgent extends AgentImpl {
   /// Constructor.
   HomeWorkAgent({
     @required ApplicationContext applicationContext,
-  })
-      : super(applicationContext: applicationContext);
+  }) : super(applicationContext: applicationContext);
 
   @override
   Future<Null> onReady(
@@ -64,7 +63,7 @@ class HomeWorkAgent extends AgentImpl {
     intelligenceServices.ctrl.close();
 
     final Map<String, List<Map<String, String>>> proposals =
-        convert.JSON.decode(
+        convert.json.decode(
       new File(_kConfigFile).readAsStringSync(),
     );
 
@@ -72,7 +71,7 @@ class HomeWorkAgent extends AgentImpl {
 
     final Map<String, List<Map<String, String>>> dataProposals =
         dataProposalFile.existsSync()
-            ? convert.JSON.decode(
+            ? convert.json.decode(
                 dataProposalFile.readAsStringSync(),
               )
             : <String, List<Map<String, String>>>{};
@@ -95,7 +94,7 @@ class HomeWorkAgent extends AgentImpl {
         new _ContextListenerImpl(
           proposalPublisher: _proposalPublisher,
           onTopicChanged: (String locationJson) {
-            final Map<String, String> json = convert.JSON.decode(locationJson);
+            final Map<String, String> json = convert.json.decode(locationJson);
             if (json['location']?.isEmpty ?? true) {
               return;
             }
@@ -104,17 +103,17 @@ class HomeWorkAgent extends AgentImpl {
             proposals.values.forEach(
               (List<Map<String, String>> proposalCategories) =>
                   proposalCategories.forEach(
-                    (Map<String, String> proposal) =>
-                        _proposalPublisher.remove(proposal['id']),
-                  ),
+                (Map<String, String> proposal) =>
+                    _proposalPublisher.remove(proposal['id']),
+              ),
             );
 
             dataProposals.values.forEach(
               (List<Map<String, String>> proposalCategories) =>
                   proposalCategories.forEach(
-                    (Map<String, String> proposal) =>
-                        _proposalPublisher.remove(proposal['id']),
-                  ),
+                (Map<String, String> proposal) =>
+                    _proposalPublisher.remove(proposal['id']),
+              ),
             );
 
             // Add proposals for this location.
@@ -136,7 +135,7 @@ class HomeWorkAgent extends AgentImpl {
       ),
     );
 
-    final List<Map<String, String>> askProposals = convert.JSON.decode(
+    final List<Map<String, String>> askProposals = convert.json.decode(
       new File(_kAskProposalsFile).readAsStringSync(),
     );
 

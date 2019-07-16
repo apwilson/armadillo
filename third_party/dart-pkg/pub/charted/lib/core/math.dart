@@ -8,7 +8,7 @@
 
 part of charted.core;
 
-const double PI = math.PI;
+const double PI = math.pi;
 const double HALF_PI = PI / 2.0;
 const double TAU = PI * 2.0;
 const double EPSILON = 1e-6;
@@ -21,5 +21,5 @@ const int SMALL_INT_MIN = -1 * (1 << 30);
 num cosh(num x) => ((x = math.exp(x)) + 1 / x) / 2;
 num sinh(num x) => ((x = math.exp(x)) - 1 / x) / 2;
 num tanh(num x) => ((x = math.exp(2 * x)) - 1) / (x + 1);
-num toRadians(num degrees) => degrees * math.PI / 180.0;
-num toDegrees(num radians) => radians * 180.0 / math.PI;
+num toRadians(num degrees) => degrees * math.pi / 180.0;
+num toDegrees(num radians) => radians * 180.0 / math.pi;

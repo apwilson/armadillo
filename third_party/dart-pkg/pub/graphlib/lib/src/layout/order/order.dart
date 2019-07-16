@@ -23,13 +23,15 @@ import "../util.dart" as util;
 ///       algorithm.
 order(Graph g) {
   var maxRank = util.maxRank(g),
-      downLayerGraphs = _buildLayerGraphs(g, util.range(1, maxRank + 1), "inEdges"),
-      upLayerGraphs = _buildLayerGraphs(g, util.range(maxRank - 1, -1, -1), "outEdges");
+      downLayerGraphs =
+          _buildLayerGraphs(g, util.range(1, maxRank + 1), "inEdges"),
+      upLayerGraphs =
+          _buildLayerGraphs(g, util.range(maxRank - 1, -1, -1), "outEdges");
 
   var layering = initOrder(g);
   _assignOrder(g, layering);
 
-  var bestCC = double.INFINITY;
+  var bestCC = double.infinity;
   List<List> best;
 
   for (var i = 0, lastBest = 0; lastBest < 4; ++i, ++lastBest) {
@@ -40,7 +42,8 @@ order(Graph g) {
     if (cc < bestCC) {
       lastBest = 0;
       //best = _.cloneDeep(layering);
-      best = new List<List>.generate(layering.length, (i) => layering[i].toList());
+      best =
+          new List<List>.generate(layering.length, (i) => layering[i].toList());
       bestCC = cc;
     }
   }

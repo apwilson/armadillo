@@ -14,44 +14,103 @@ import "position/position.dart";
 import "util.dart" as util;
 import "../graph.dart" show Graph;
 
-layout(Graph g, [bool debugTiming=false]) {
+layout(Graph g, [bool debugTiming = false]) {
   var time = debugTiming ? util.time : util.notime;
   time("layout", () {
-    var layoutGraph = time("  buildLayoutGraph",
-                               () { return buildLayoutGraph(g); });
-    time("  runLayout",        () { runLayout(layoutGraph, time); });
-    time("  updateInputGraph", () { updateInputGraph(g, layoutGraph); });
+    var layoutGraph = time("  buildLayoutGraph", () {
+      return buildLayoutGraph(g);
+    });
+    time("  runLayout", () {
+      runLayout(layoutGraph, time);
+    });
+    time("  updateInputGraph", () {
+      updateInputGraph(g, layoutGraph);
+    });
   });
 }
 
 runLayout(Graph g, time) {
-  time("    makeSpaceForEdgeLabels", () { makeSpaceForEdgeLabels(g); });
-  time("    removeSelfEdges",        () { removeSelfEdges(g); });
-  time("    acyclic",                () { acyclic.run(g); });
-  time("    nestingGraph.run",       () { nestingGraph.run(g); });
-  time("    rank",                   () { rank(util.asNonCompoundGraph(g)); });
-  time("    injectEdgeLabelProxies", () { injectEdgeLabelProxies(g); });
-  time("    removeEmptyRanks",       () { removeEmptyRanks(g); });
-  time("    nestingGraph.cleanup",   () { nestingGraph.cleanup(g); });
-  time("    normalizeRanks",         () { normalizeRanks(g); });
-  time("    assignRankMinMax",       () { assignRankMinMax(g); });
-  time("    removeEdgeLabelProxies", () { removeEdgeLabelProxies(g); });
-  time("    normalize.run",          () { normalize.run(g); });
-  time("    parentDummyChains",      () { parentDummyChains(g); });
-  time("    addBorderSegments",      () { addBorderSegments(g); });
-  time("    order",                  () { order(g); });
-  time("    insertSelfEdges",        () { insertSelfEdges(g); });
-  time("    adjustCoordinateSystem", () { coordinateSystem.adjust(g); });
-  time("    position",               () { position(g); });
-  time("    positionSelfEdges",      () { positionSelfEdges(g); });
-  time("    removeBorderNodes",      () { removeBorderNodes(g); });
-  time("    normalize.undo",         () { normalize.undo(g); });
-  time("    fixupEdgeLabelCoords",   () { fixupEdgeLabelCoords(g); });
-  time("    undoCoordinateSystem",   () { coordinateSystem.undo(g); });
-  time("    translateGraph",         () { translateGraph(g); });
-  time("    assignNodeIntersects",   () { assignNodeIntersects(g); });
-  time("    reversePoints",          () { reversePointsForReversedEdges(g); });
-  time("    acyclic.undo",           () { acyclic.undo(g); });
+  time("    makeSpaceForEdgeLabels", () {
+    makeSpaceForEdgeLabels(g);
+  });
+  time("    removeSelfEdges", () {
+    removeSelfEdges(g);
+  });
+  time("    acyclic", () {
+    acyclic.run(g);
+  });
+  time("    nestingGraph.run", () {
+    nestingGraph.run(g);
+  });
+  time("    rank", () {
+    rank(util.asNonCompoundGraph(g));
+  });
+  time("    injectEdgeLabelProxies", () {
+    injectEdgeLabelProxies(g);
+  });
+  time("    removeEmptyRanks", () {
+    removeEmptyRanks(g);
+  });
+  time("    nestingGraph.cleanup", () {
+    nestingGraph.cleanup(g);
+  });
+  time("    normalizeRanks", () {
+    normalizeRanks(g);
+  });
+  time("    assignRankMinMax", () {
+    assignRankMinMax(g);
+  });
+  time("    removeEdgeLabelProxies", () {
+    removeEdgeLabelProxies(g);
+  });
+  time("    normalize.run", () {
+    normalize.run(g);
+  });
+  time("    parentDummyChains", () {
+    parentDummyChains(g);
+  });
+  time("    addBorderSegments", () {
+    addBorderSegments(g);
+  });
+  time("    order", () {
+    order(g);
+  });
+  time("    insertSelfEdges", () {
+    insertSelfEdges(g);
+  });
+  time("    adjustCoordinateSystem", () {
+    coordinateSystem.adjust(g);
+  });
+  time("    position", () {
+    position(g);
+  });
+  time("    positionSelfEdges", () {
+    positionSelfEdges(g);
+  });
+  time("    removeBorderNodes", () {
+    removeBorderNodes(g);
+  });
+  time("    normalize.undo", () {
+    normalize.undo(g);
+  });
+  time("    fixupEdgeLabelCoords", () {
+    fixupEdgeLabelCoords(g);
+  });
+  time("    undoCoordinateSystem", () {
+    coordinateSystem.undo(g);
+  });
+  time("    translateGraph", () {
+    translateGraph(g);
+  });
+  time("    assignNodeIntersects", () {
+    assignNodeIntersects(g);
+  });
+  time("    reversePoints", () {
+    reversePointsForReversedEdges(g);
+  });
+  time("    acyclic.undo", () {
+    acyclic.undo(g);
+  });
 }
 
 /*
@@ -62,8 +121,7 @@ runLayout(Graph g, time) {
  */
 updateInputGraph(Graph inputGraph, Graph layoutGraph) {
   inputGraph.nodes.forEach((v) {
-    Map inputLabel = inputGraph.node(v),
-        layoutLabel = layoutGraph.node(v);
+    Map inputLabel = inputGraph.node(v), layoutLabel = layoutGraph.node(v);
 
     if (inputLabel != null) {
       inputLabel["x"] = layoutLabel["x"];
@@ -91,16 +149,31 @@ updateInputGraph(Graph inputGraph, Graph layoutGraph) {
   inputGraph.graph()["height"] = layoutGraph.graph()["height"];
 }
 
-const graphNumAttrs = const ["nodesep", "edgesep", "ranksep", "marginx", "marginy"],
-    graphDefaults = const { "ranksep": 50, "edgesep": 20, "nodesep": 50, "rankdir": "tb" },
+const graphNumAttrs = const [
+  "nodesep",
+  "edgesep",
+  "ranksep",
+  "marginx",
+  "marginy"
+],
+    graphDefaults = const {
+  "ranksep": 50,
+  "edgesep": 20,
+  "nodesep": 50,
+  "rankdir": "tb"
+},
     graphAttrs = const ["acyclicer", "ranker", "rankdir", "align"],
     nodeNumAttrs = const ["width", "height"],
-    nodeDefaults = const { "width": 0, "height": 0 },
+    nodeDefaults = const {"width": 0, "height": 0},
     edgeNumAttrs = const ["minlen", "weight", "width", "height", "labeloffset"],
     edgeDefaults = const {
-      "minlen": 1, "weight": 1, "width": 0, "height": 0,
-      "labeloffset": 10, "labelpos": "r"
-    },
+  "minlen": 1,
+  "weight": 1,
+  "width": 0,
+  "height": 0,
+  "labeloffset": 10,
+  "labelpos": "r"
+},
     edgeAttrs = const ["labelpos"];
 
 /// Constructs a new graph from the input graph, which can be used for layout.
@@ -111,23 +184,28 @@ buildLayoutGraph(Graph inputGraph) {
   var g = new Graph(multigraph: true, compound: true),
       graph = canonicalize(inputGraph.graph());
 
-  g.setGraph(util.merge({},
-    [graphDefaults,
+  g.setGraph(util.merge({}, [
+    graphDefaults,
     selectNumberAttrs(graph, graphNumAttrs),
-    util.pick(graph, graphAttrs)]));
+    util.pick(graph, graphAttrs)
+  ]));
 
   inputGraph.nodes.forEach((v) {
     var node = canonicalize(inputGraph.node(v));
-    g.setNode(v, util.defaults(selectNumberAttrs(node, nodeNumAttrs), nodeDefaults));
+    g.setNode(
+        v, util.defaults(selectNumberAttrs(node, nodeNumAttrs), nodeDefaults));
     g.setParent(v, inputGraph.parent(v));
   });
 
   inputGraph.edges.forEach((e) {
     var edge = canonicalize(inputGraph.edgeObj(e));
-    g.setEdge(e, util.merge({},
-      [edgeDefaults,
-      selectNumberAttrs(edge, edgeNumAttrs),
-      util.pick(edge, edgeAttrs)]));
+    g.setEdge(
+        e,
+        util.merge({}, [
+          edgeDefaults,
+          selectNumberAttrs(edge, edgeNumAttrs),
+          util.pick(edge, edgeAttrs)
+        ]));
   });
 
   return g;
@@ -165,7 +243,7 @@ injectEdgeLabelProxies(Graph g) {
     if (edge["width"] && edge["height"]) {
       Map v = g.node(e.v),
           w = g.node(e.w),
-          label = { "rank": (w["rank"] - v["rank"]) / 2 + v["rank"], "e": e };
+          label = {"rank": (w["rank"] - v["rank"]) / 2 + v["rank"], "e": e};
       util.addDummyNode(g, "edge-proxy", label, "_ep");
     }
   });
@@ -195,9 +273,9 @@ removeEdgeLabelProxies(Graph g) {
 }
 
 translateGraph(Graph g) {
-  var minX = double.INFINITY,
+  var minX = double.infinity,
       maxX = 0,
-      minY = double.INFINITY,
+      minY = double.infinity,
       maxY = 0,
       graphLabel = g.graph(),
       marginX = graphLabel["marginx"],
@@ -210,17 +288,16 @@ translateGraph(Graph g) {
   }
 
   getExtremes(Map attrs) {
-    var x = attrs["x"],
-        y = attrs["y"],
-        w = attrs["width"],
-        h = attrs["height"];
+    var x = attrs["x"], y = attrs["y"], w = attrs["width"], h = attrs["height"];
     minX = Math.min(minX, x - w / 2);
     maxX = Math.max(maxX, x + w / 2);
     minY = Math.min(minY, y - h / 2);
     maxY = Math.max(maxY, y + h / 2);
   }
 
-  g.nodes.forEach((v) { getExtremes(g.node(v)); });
+  g.nodes.forEach((v) {
+    getExtremes(g.node(v));
+  });
   g.edges.forEach((e) {
     Map edge = g.edgeObj(e);
     if (edge.containsKey("x")) {
@@ -243,8 +320,12 @@ translateGraph(Graph g) {
       p.x -= minX;
       p.y -= minY;
     });
-    if (edge.containsKey("x")) { edge["x"] -= minX; }
-    if (edge.containsKey("y")) { edge["y"] -= minY; }
+    if (edge.containsKey("x")) {
+      edge["x"] -= minX;
+    }
+    if (edge.containsKey("y")) {
+      edge["y"] -= minY;
+    }
   });
 
   graphLabel["width"] = maxX - minX + marginX;
@@ -253,10 +334,7 @@ translateGraph(Graph g) {
 
 assignNodeIntersects(Graph g) {
   g.edges.forEach((e) {
-    Map edge = g.edgeObj(e),
-        nodeV = g.node(e.v),
-        nodeW = g.node(e.w),
-        p1, p2;
+    Map edge = g.edgeObj(e), nodeV = g.node(e.v), nodeW = g.node(e.w), p1, p2;
     if (edge["points"] == null) {
       edge["points"] = [];
       p1 = nodeW;
@@ -278,8 +356,12 @@ fixupEdgeLabelCoords(Graph g) {
         edge["width"] -= edge["labeloffset"];
       }
       switch (edge["labelpos"]) {
-        case "l": edge["x"] -= edge["width"] / 2 + edge["labeloffset"]; break;
-        case "r": edge["x"] += edge["width"] / 2 + edge["labeloffset"]; break;
+        case "l":
+          edge["x"] -= edge["width"] / 2 + edge["labeloffset"];
+          break;
+        case "r":
+          edge["x"] += edge["width"] / 2 + edge["labeloffset"];
+          break;
       }
     }
   });
@@ -324,7 +406,7 @@ removeSelfEdges(Graph g) {
       if (!node["selfEdges"]) {
         node["selfEdges"] = [];
       }
-      node["selfEdges"].add({ "e": e, "label": g.edgeObj(e) });
+      node["selfEdges"].add({"e": e, "label": g.edgeObj(e)});
       g.removeEdgeObj(e);
     }
   });
@@ -338,14 +420,18 @@ insertSelfEdges(Graph g) {
       Map node = g.node(v);
       node["order"] = i + orderShift;
       node["selfEdges"].forEach((Map selfEdge) {
-        util.addDummyNode(g, "selfedge", {
-          "width": selfEdge["label"].width,
-          "height": selfEdge["label"].height,
-          "rank": node["rank"],
-          "order": i + (++orderShift),
-          "e": selfEdge["e"],
-          "label": selfEdge["label"]
-        }, "_se");
+        util.addDummyNode(
+            g,
+            "selfedge",
+            {
+              "width": selfEdge["label"].width,
+              "height": selfEdge["label"].height,
+              "rank": node["rank"],
+              "order": i + (++orderShift),
+              "e": selfEdge["e"],
+              "label": selfEdge["label"]
+            },
+            "_se");
       });
       node.remove("selfEdges");
     });
@@ -364,11 +450,11 @@ positionSelfEdges(Graph g) {
       g.setEdge(node["e"], node["label"]);
       g.removeNode(v);
       node["label"]["points"] = [
-        { "x": x + 2 * dx / 3, "y": y - dy },
-        { "x": x + 5 * dx / 6, "y": y - dy },
-        { "x": x +     dx    , "y": y },
-        { "x": x + 5 * dx / 6, "y": y + dy },
-        { "x": x + 2 * dx / 3, "y": y + dy },
+        {"x": x + 2 * dx / 3, "y": y - dy},
+        {"x": x + 5 * dx / 6, "y": y - dy},
+        {"x": x + dx, "y": y},
+        {"x": x + 5 * dx / 6, "y": y + dy},
+        {"x": x + 2 * dx / 3, "y": y + dy},
       ];
       node["label"]["x"] = node["x"];
       node["label"]["y"] = node["y"];

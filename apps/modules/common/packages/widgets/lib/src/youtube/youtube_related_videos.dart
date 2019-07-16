@@ -35,8 +35,7 @@ class YoutubeRelatedVideos extends StatefulWidget {
     Key key,
     @required @ExampleValue(kExampleVideoId) this.videoId,
     @required @ConfigKey('google_api_key') this.apiKey,
-  })
-      : super(key: key) {
+  }) : super(key: key) {
     assert(videoId != null);
     assert(apiKey != null);
   }
@@ -186,7 +185,7 @@ Future<List<VideoData>> _getRelatedVideoData({
     return null;
   }
 
-  dynamic jsonData = JSON.decode(response.body);
+  dynamic jsonData = json.decode(response.body);
 
   if (jsonData['items'] is List<Map<String, dynamic>>) {
     return jsonData['items'].map((dynamic json) {

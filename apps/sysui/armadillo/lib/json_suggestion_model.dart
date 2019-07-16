@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:convert';
+import 'dart:convert' as convert;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -20,9 +20,8 @@ const String _kJsonUrl = 'packages/armadillo/res/stories.json';
 /// A simple suggestion model that reads suggestions from json maps them to
 /// stories.
 class JsonSuggestionModel extends SuggestionModel {
-  Map<Object, List<Suggestion>> _storySuggestionsMap =
-      const <Object, List<Suggestion>>{};
-  List<Suggestion> _currentSuggestions = const <Suggestion>[];
+  var _storySuggestionsMap = <StoryId, List<Suggestion>>{};
+  List<Suggestion> _currentSuggestions = [];
   StoryCluster _activeStoryCluster;
   String _askText;
   bool _asking = false;
@@ -31,14 +30,14 @@ class JsonSuggestionModel extends SuggestionModel {
   /// [assetBundle].
   void load(AssetBundle assetBundle) {
     assetBundle.loadString(_kJsonUrl).then((String json) {
-      final Map<String, dynamic> decodedJson = JSON.decode(json);
+      final Map<String, dynamic> decodedJson = convert.json.decode(json);
 
       // Load suggestions.
       Map<SuggestionId, Suggestion> suggestionMap =
           new Map<SuggestionId, Suggestion>.fromIterable(
         decodedJson['suggestions'].map(
-          (Map<String, dynamic> suggestion) {
-            final List<String> icons = suggestion['icons'];
+          (suggestion) {
+            final List<dynamic> icons = suggestion['icons'];
             return new Suggestion(
               id: new SuggestionId(suggestion['id']),
               title: suggestion['title'],
@@ -50,9 +49,10 @@ class JsonSuggestionModel extends SuggestionModel {
               icons: icons != null
                   ? icons
                       .map(
-                        (String icon) => (BuildContext context) =>
-                            new Image.asset(icon,
-                                fit: BoxFit.cover, color: Colors.white),
+                        (icon) => (BuildContext context) => new Image.asset(
+                            icon,
+                            fit: BoxFit.cover,
+                            color: Colors.white),
                       )
                       .toList()
                   : const <WidgetBuilder>[],
@@ -66,17 +66,17 @@ class JsonSuggestionModel extends SuggestionModel {
             );
           },
         ),
-        key: (Suggestion suggestion) => suggestion.id,
-        value: (Suggestion suggestion) => suggestion,
+        key: (suggestion) => suggestion.id,
+        value: (suggestion) => suggestion,
       );
 
       // Load story suggestions map.
-      _storySuggestionsMap = new Map<Object, List<Suggestion>>();
-      decodedJson["story_suggestions_map"]
-          .forEach((String storyId, List<String> suggestions) {
+      _storySuggestionsMap = <StoryId, List<Suggestion>>{};
+
+      decodedJson["story_suggestions_map"].forEach((storyId, suggestions) {
         _storySuggestionsMap[new StoryId(storyId)] = suggestions
-            .map((String suggestionId) =>
-                suggestionMap[new SuggestionId(suggestionId)])
+            .map<Suggestion>(
+                (suggestionId) => suggestionMap[new SuggestionId(suggestionId)])
             .toList();
       });
 

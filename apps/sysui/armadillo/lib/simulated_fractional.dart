@@ -48,8 +48,7 @@ class SimulatedFractional extends StatefulWidget {
     this.size,
     this.springDescription: _kDefaultSimulationDesc,
     this.child,
-  })
-      : super(key: key) {
+  }) : super(key: key) {
     assert(fractionalWidth != null);
     assert(fractionalHeight != null);
     assert(size != null);
@@ -204,7 +203,7 @@ class SimulatedFractionalState extends TickingState<SimulatedFractional> {
   }
 
   @override
-  String toString() =>
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) =>
       'SimulatedFractionalState(top: $_fractionalTopSimulation, '
       'left: $_fractionalLeftSimulation, '
       'width: $_fractionalWidthSimulation, '

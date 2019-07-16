@@ -53,7 +53,7 @@ class LinkWatcherImpl extends LinkWatcher {
   void notify(String json) {
     _log('LinkWatcherImpl::notify call');
 
-    final dynamic doc = JSON.decode(json);
+    final dynamic doc = json.decode(json);
     try {
       _videoId = doc[_kYoutubeDocRoot][_kYoutubeVideoIdKey];
     } catch (_) {

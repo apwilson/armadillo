@@ -35,7 +35,7 @@ Future<List<String>> obtainScopesFromAccessToken(
       '?access_token=${Uri.encodeQueryComponent(accessToken)}');
   return client.post(url).then((http.Response response) {
     if (response.statusCode == 200) {
-      Map json = JSON.decode(response.body);
+      Map json = json.decode(response.body);
       return (json['scope'] as String).split(' ').toList();
     } else {
       throw new Exception('Unable to obtain list of scopes an access token '
@@ -64,7 +64,7 @@ Future<AccessCredentials> obtainAccessCredentialsUsingCode(
   var response = await client.send(request);
   Map json = await response.stream
       .transform(UTF8.decoder)
-      .transform(JSON.decoder)
+      .transform(json.decoder)
       .first;
 
   var tokenType = json['token_type'];
@@ -134,8 +134,7 @@ abstract class AuthorizationCodeGrantAbstractFlow {
     if (state != null) {
       queryValues.add('state=${Uri.encodeQueryComponent(state)}');
     }
-    return Uri
-        .parse('https://accounts.google.com/o/oauth2/auth'
+    return Uri.parse('https://accounts.google.com/o/oauth2/auth'
             '?${queryValues.join('&')}')
         .toString();
   }

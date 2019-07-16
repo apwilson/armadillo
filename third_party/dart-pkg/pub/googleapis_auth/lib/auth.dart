@@ -110,7 +110,7 @@ class ServiceAccountCredentials {
   /// to impersonate if impersonating a user.
   factory ServiceAccountCredentials.fromJson(json, {String impersonatedUser}) {
     if (json is String) {
-      json = JSON.decode(json);
+      json = json.decode(json);
     }
     if (json is! Map) {
       throw new ArgumentError('json must be a Map or a String encoding a Map.');
@@ -253,7 +253,7 @@ Future<AccessCredentials> refreshCredentials(
 
   return response.stream
       .transform(ASCII.decoder)
-      .transform(JSON.decoder)
+      .transform(json.decoder)
       .first
       .then((object) {
     Map json = object as Map;

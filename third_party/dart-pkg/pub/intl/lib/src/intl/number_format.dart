@@ -1108,10 +1108,10 @@ class _NumberParser {
   num parse() {
     if (text == symbols.NAN) return double.NAN;
     if (text == "$_positivePrefix${symbols.INFINITY}$_positiveSuffix") {
-      return double.INFINITY;
+      return double.infinity;
     }
     if (text == "$_negativePrefix${symbols.INFINITY}$_negativeSuffix") {
-      return double.NEGATIVE_INFINITY;
+      return double.negativeInfinity;
     }
 
     checkPrefixes();

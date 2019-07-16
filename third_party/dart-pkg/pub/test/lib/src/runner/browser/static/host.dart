@@ -156,11 +156,11 @@ MultiChannel _connectToServer() {
 
   var controller = new StreamChannelController(sync: true);
   webSocket.onMessage.listen((message) {
-    controller.local.sink.add(JSON.decode(message.data));
+    controller.local.sink.add(json.decode(message.data));
   });
 
-  controller.local.stream.listen(
-      (message) => webSocket.send(JSON.encode(message)));
+  controller.local.stream
+      .listen((message) => webSocket.send(JSON.encode(message)));
 
   return new MultiChannel(controller.foreign);
 }

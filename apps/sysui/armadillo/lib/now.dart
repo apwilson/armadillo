@@ -137,8 +137,7 @@ class Now extends StatefulWidget {
     this.onLogoutLongPressed,
     this.onUserContextTapped,
     this.onMinimizedContextTapped,
-  })
-      : super(key: key);
+  }) : super(key: key);
 
   @override
   NowState createState() => new NowState();
@@ -228,13 +227,12 @@ class NowState extends TickingState<Now> {
           StoryDragTransitionModel storyDragTransitionModel,
         ) =>
             new Offstage(
-              offstage: storyDragTransitionModel.progress == 1.0,
-              child: new Opacity(
-                opacity:
-                    lerpDouble(1.0, 0.0, storyDragTransitionModel.progress),
-                child: child,
-              ),
-            ),
+          offstage: storyDragTransitionModel.progress == 1.0,
+          child: new Opacity(
+            opacity: lerpDouble(1.0, 0.0, storyDragTransitionModel.progress),
+            child: child,
+          ),
+        ),
         child: _buildNow(context),
       );
 
@@ -267,9 +265,9 @@ class NowState extends TickingState<Now> {
             child: new AnimatedBuilder(
               animation: widget.scrollController,
               builder: (BuildContext context, Widget child) => new Container(
-                    height: _getNowHeight(widget.scrollController.offset),
-                    child: child,
-                  ),
+                height: _getNowHeight(widget.scrollController.offset),
+                child: child,
+              ),
               child: new ScopedModelDescendant<NowModel>(
                 builder: (
                   BuildContext context,
@@ -277,85 +275,85 @@ class NowState extends TickingState<Now> {
                   NowModel nowModel,
                 ) =>
                     new Stack(
-                      fit: StackFit.passthrough,
-                      children: <Widget>[
-                        // Quick Settings Background.
-                        new Positioned(
-                          left: _kQuickSettingsHorizontalPadding,
-                          right: _kQuickSettingsHorizontalPadding,
-                          top: _quickSettingsBackgroundTopOffset,
-                          child: new Center(
-                            child: new Container(
-                              height: _quickSettingsBackgroundHeight,
-                              width: _quickSettingsBackgroundWidth,
-                              decoration: new BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: new BorderRadius.circular(
-                                  _quickSettingsBackgroundBorderRadius,
-                                ),
-                              ),
+                  fit: StackFit.passthrough,
+                  children: <Widget>[
+                    // Quick Settings Background.
+                    new Positioned(
+                      left: _kQuickSettingsHorizontalPadding,
+                      right: _kQuickSettingsHorizontalPadding,
+                      top: _quickSettingsBackgroundTopOffset,
+                      child: new Center(
+                        child: new Container(
+                          height: _quickSettingsBackgroundHeight,
+                          width: _quickSettingsBackgroundWidth,
+                          decoration: new BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: new BorderRadius.circular(
+                              _quickSettingsBackgroundBorderRadius,
                             ),
                           ),
                         ),
-                        // User Image, User Context Text, and Important Information when maximized.
-                        new Positioned(
-                          left: _kQuickSettingsHorizontalPadding,
-                          right: _kQuickSettingsHorizontalPadding,
-                          top: _userImageTopOffset,
-                          child: new Center(
-                            child: new Column(
+                      ),
+                    ),
+                    // User Image, User Context Text, and Important Information when maximized.
+                    new Positioned(
+                      left: _kQuickSettingsHorizontalPadding,
+                      right: _kQuickSettingsHorizontalPadding,
+                      top: _userImageTopOffset,
+                      child: new Center(
+                        child: new Column(
+                          children: <Widget>[
+                            new Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                new Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    // User Context Text when maximized.
-                                    new Expanded(
-                                      child: new GestureDetector(
-                                        onTap: widget.onUserContextTapped,
-                                        behavior: HitTestBehavior.opaque,
-                                        child: new Container(
-                                          key: _userContextTextKey,
-                                          height: _userImageSize,
-                                          child: nowModel.userContextMaximized(
-                                            opacity: _fallAwayOpacity,
-                                          ),
-                                        ),
+                                // User Context Text when maximized.
+                                new Expanded(
+                                  child: new GestureDetector(
+                                    onTap: widget.onUserContextTapped,
+                                    behavior: HitTestBehavior.opaque,
+                                    child: new Container(
+                                      key: _userContextTextKey,
+                                      height: _userImageSize,
+                                      child: nowModel.userContextMaximized(
+                                        opacity: _fallAwayOpacity,
                                       ),
                                     ),
-                                    // User Profile image
-                                    _buildUserImage(nowModel),
-                                    // Important Information when maximized.
-                                    new Expanded(
-                                      child: new Container(
-                                        key: _importantInfoMaximizedKey,
-                                        height: _userImageSize,
-                                        child: nowModel.importantInfoMaximized(
-                                          opacity: _fallAwayOpacity,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                                // Quick Settings
-                                new Container(
-                                  padding: const EdgeInsets.only(top: 32.0),
-                                  child: _buildQuickSettings(nowModel),
+                                // User Profile image
+                                _buildUserImage(nowModel),
+                                // Important Information when maximized.
+                                new Expanded(
+                                  child: new Container(
+                                    key: _importantInfoMaximizedKey,
+                                    height: _userImageSize,
+                                    child: nowModel.importantInfoMaximized(
+                                      opacity: _fallAwayOpacity,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
+                            // Quick Settings
+                            new Container(
+                              padding: const EdgeInsets.only(top: 32.0),
+                              child: _buildQuickSettings(nowModel),
+                            ),
+                          ],
                         ),
-
-                        // User Context Text and Important Information when minimized.
-                        _buildMinimizedUserContextTextAndImportantInformation(
-                          nowModel,
-                        ),
-
-                        // Minimized button bar gesture detector. Only enabled when
-                        // we're nearly fully minimized.
-                        _buildMinimizedButtonBarGestureDetector(),
-                      ],
+                      ),
                     ),
+
+                    // User Context Text and Important Information when minimized.
+                    _buildMinimizedUserContextTextAndImportantInformation(
+                      nowModel,
+                    ),
+
+                    // Minimized button bar gesture detector. Only enabled when
+                    // we're nearly fully minimized.
+                    _buildMinimizedButtonBarGestureDetector(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -413,7 +411,7 @@ class NowState extends TickingState<Now> {
           child: new ClipRect(
             child: new OverflowBox(
               // don't use parent height as constraint
-              maxHeight: double.INFINITY,
+              maxHeight: double.infinity,
               minHeight: 0.0,
               maxWidth: _quickSettingsBackgroundMaximizedWidth -
                   2.0 * _kQuickSettingsInnerHorizontalPadding,

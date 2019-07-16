@@ -27,14 +27,14 @@ Map findType1Conflicts(Graph g, Iterable layering) {
 
   visitLayer(Map prevLayer, List layer) {
     var
-      // last visited node in the previous layer that is incident on an inner
-      // segment.
-      k0 = 0,
-      // Tracks the last node in this layer scanned for crossings with a type-1
-      // segment.
-      scanPos = 0,
-      prevLayerLength = prevLayer.length,
-      lastNode = layer.last;
+        // last visited node in the previous layer that is incident on an inner
+        // segment.
+        k0 = 0,
+        // Tracks the last node in this layer scanned for crossings with a type-1
+        // segment.
+        scanPos = 0,
+        prevLayerLength = prevLayer.length,
+        lastNode = layer.last;
 
     int i = 0;
     layer.forEach((v) {
@@ -42,10 +42,9 @@ Map findType1Conflicts(Graph g, Iterable layering) {
           k1 = w ? g.node(w).order : prevLayerLength;
 
       if (w || v == lastNode) {
-        layer.getRange(scanPos, i +1).forEach((scanNode) {
+        layer.getRange(scanPos, i + 1).forEach((scanNode) {
           g.predecessors(scanNode).forEach((u) {
-            var uLabel = g.node(u),
-                uPos = uLabel.order;
+            var uLabel = g.node(u), uPos = uLabel.order;
             if ((uPos < k0 || k1 < uPos) &&
                 !(uLabel["dummy"] && g.node(scanNode)["dummy"])) {
               addConflict(conflicts, u, scanNode);
@@ -76,7 +75,8 @@ Map findType2Conflicts(Graph g, Iterable layering) {
         g.predecessors(v).forEach((u) {
           Map uNode = g.node(u);
           if (uNode["dummy"] &&
-              (uNode["order"] < prevNorthBorder || uNode["order"] > nextNorthBorder)) {
+              (uNode["order"] < prevNorthBorder ||
+                  uNode["order"] > nextNorthBorder)) {
             addConflict(conflicts, u, v);
           }
         });
@@ -84,11 +84,8 @@ Map findType2Conflicts(Graph g, Iterable layering) {
     });
   }
 
-
   visitLayer(north, south) {
-    var prevNorthPos = -1,
-        nextNorthPos,
-        southPos = 0;
+    var prevNorthPos = -1, nextNorthPos, southPos = 0;
 
     south.forEach((v, southLookahead) {
       if (g.node(v).dummy == "border") {
@@ -147,10 +144,9 @@ bool hasConflict(Map conflicts, v, w) {
 /// If a previous node has already formed a block with a node after the node
 /// we're trying to form a block with, we also ignore that possibility - our
 /// blocks would be split in that scenario.
-Map verticalAlignment(Graph g, Iterable layering, Map conflicts, Iterable neighborFn(v)) {
-  var root = {},
-      align = {},
-      pos = {};
+Map verticalAlignment(
+    Graph g, Iterable layering, Map conflicts, Iterable neighborFn(v)) {
+  var root = {}, align = {}, pos = {};
 
   // We cache the position here based on the layering because the graph and
   // layering may be out of sync. The layering matrix is manipulated to
@@ -184,10 +180,11 @@ Map verticalAlignment(Graph g, Iterable layering, Map conflicts, Iterable neighb
     });
   });
 
-  return { "root": root, "align": align };
+  return {"root": root, "align": align};
 }
 
-Map horizontalCompaction(Graph g, Iterable layering, root, align, [bool reverseSep=false]) {
+Map horizontalCompaction(Graph g, Iterable layering, root, align,
+    [bool reverseSep = false]) {
   // We use local variables for these parameters instead of manipulating the
   // graph because it becomes more verbose to access them in a chained manner.
   var shift = {},
@@ -201,14 +198,15 @@ Map horizontalCompaction(Graph g, Iterable layering, root, align, [bool reverseS
   layering.forEach((layer) {
     layer.forEach((v, order) {
       sink[v] = v;
-      shift[v] = double.INFINITY;
+      shift[v] = double.infinity;
       pred[v] = layer[order - 1];
     });
   });
 
   g.nodes.forEach((v) {
     if (root[v] == v) {
-      placeBlock(g, layering, sepFn, root, align, shift, shiftNeighbor, sink, pred, xs, v);
+      placeBlock(g, layering, sepFn, root, align, shift, shiftNeighbor, sink,
+          pred, xs, v);
     }
   });
 
@@ -217,12 +215,12 @@ Map horizontalCompaction(Graph g, Iterable layering, root, align, [bool reverseS
       xs[v] = xs[root[v]];
       // This line differs from the source paper. See
       // http://www.inf.uni-konstanz.de/~brandes/publications/ for details.
-      if (v == root[v] && shift[sink[root[v]]] < double.INFINITY) {
+      if (v == root[v] && shift[sink[root[v]]] < double.infinity) {
         xs[v] += shift[sink[root[v]]];
 
         // Cascade shifts as necessary
         var w = shiftNeighbor[sink[root[v]]];
-        if (w && shift[w] != double.INFINITY) {
+        if (w && shift[w] != double.infinity) {
           xs[v] += shift[w];
         }
       }
@@ -232,16 +230,17 @@ Map horizontalCompaction(Graph g, Iterable layering, root, align, [bool reverseS
   return xs;
 }
 
-placeBlock(Graph g, layering, Function sepFn, root, align, shift, shiftNeighbor, sink, pred, xs, v) {
+placeBlock(Graph g, layering, Function sepFn, root, align, shift, shiftNeighbor,
+    sink, pred, xs, v) {
   if (xs.containsKey(v)) return;
   xs[v] = 0;
 
-  var w = v,
-      u;
+  var w = v, u;
   do {
     if (pred[w]) {
       u = root[pred[w]];
-      placeBlock(g, layering, sepFn, root, align, shift, shiftNeighbor, sink, pred, xs, u);
+      placeBlock(g, layering, sepFn, root, align, shift, shiftNeighbor, sink,
+          pred, xs, u);
       if (sink[v] == v) {
         sink[v] = sink[u];
       }
@@ -278,12 +277,13 @@ alignCoordinates(Map<String, Map> xss, Map alignTo) {
 
   ["u", "d"].forEach((vert) {
     ["l", "r"].forEach((horiz) {
-      var alignment = vert + horiz,
-          delta;
+      var alignment = vert + horiz, delta;
       Map xs = xss[alignment];
       if (xs == alignTo) return;
 
-      delta = horiz == "l" ? alignToMin - util.min(xs.values) : alignToMax - util.max(xs.values);
+      delta = horiz == "l"
+          ? alignToMin - util.min(xs.values)
+          : alignToMax - util.max(xs.values);
 
       if (delta) {
         xss[alignment] = util.mapValues(xs, (x, _) => x + delta);
@@ -305,8 +305,8 @@ balance(Map<String, Map> xss, [align]) {
 
 positionX(Graph g) {
   var layering = util.buildLayerMatrix(g);
-  var conflicts = util.merge({}, [findType1Conflicts(g, layering),
-                          findType2Conflicts(g, layering)]);
+  var conflicts = util.merge(
+      {}, [findType1Conflicts(g, layering), findType2Conflicts(g, layering)]);
 
   Map<String, Map> xss = {};
   var adjustedLayering;
@@ -319,11 +319,11 @@ positionX(Graph g) {
         });
       }
 
-      var neighborFn = (v) => (vert == "u" ? g.predecessors(v) : g.successors(v));
+      var neighborFn =
+          (v) => (vert == "u" ? g.predecessors(v) : g.successors(v));
       var align = verticalAlignment(g, adjustedLayering, conflicts, neighborFn);
-      Map xs = horizontalCompaction(g, adjustedLayering,
-                                    align["root"], align["align"],
-                                    horiz == "r");
+      Map xs = horizontalCompaction(
+          g, adjustedLayering, align["root"], align["align"], horiz == "r");
       if (horiz == "r") {
         xs = util.mapValues(xs, (_, x) => -x);
       }
@@ -338,16 +338,18 @@ positionX(Graph g) {
 
 sep(nodeSep, edgeSep, bool reverseSep) {
   return (Graph g, v, w) {
-    Map vLabel = g.node(v),
-        wLabel = g.node(w);
-    var sum = 0,
-        delta;
+    Map vLabel = g.node(v), wLabel = g.node(w);
+    var sum = 0, delta;
 
     sum += vLabel["width"] / 2;
     if (vLabel.containsKey("labelpos")) {
       switch (vLabel["labelpos"].toLowerCase()) {
-        case "l": delta = -vLabel["width"] / 2; break;
-        case "r": delta = vLabel["width"] / 2; break;
+        case "l":
+          delta = -vLabel["width"] / 2;
+          break;
+        case "r":
+          delta = vLabel["width"] / 2;
+          break;
       }
     }
     if (delta != 0) {
@@ -361,8 +363,12 @@ sep(nodeSep, edgeSep, bool reverseSep) {
     sum += wLabel["width"] / 2;
     if (wLabel.containsKey("labelpos")) {
       switch (wLabel["labelpos"].toLowerCase()) {
-        case "l": delta = wLabel["width"] / 2; break;
-        case "r": delta = -wLabel["width"] / 2; break;
+        case "l":
+          delta = wLabel["width"] / 2;
+          break;
+        case "r":
+          delta = -wLabel["width"] / 2;
+          break;
       }
     }
     if (delta != 0) {

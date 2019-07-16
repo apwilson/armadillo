@@ -86,8 +86,7 @@ class PanelDragTargets extends StatefulWidget {
     this.onAccept,
     this.onVerticalEdgeHover,
     this.currentSize,
-  })
-      : super(key: key);
+  }) : super(key: key);
 
   @override
   _PanelDragTargetsState createState() => new _PanelDragTargetsState();
@@ -168,9 +167,9 @@ class _PanelDragTargetsState extends TickingState<PanelDragTargets> {
             widget.storyCluster.id != data.id,
         onAccept: (StoryClusterDragData data, _, Velocity velocity) =>
             _onAccept(
-              data,
-              velocity,
-            ),
+          data,
+          velocity,
+        ),
         builder: (
           BuildContext context,
           Map<StoryClusterDragData, Offset> candidates,
@@ -235,12 +234,12 @@ class _PanelDragTargetsState extends TickingState<PanelDragTargets> {
     // the validity timer to go off before accepting it.
     if (candidates.isEmpty) {
       StoryClusterDragStateModel.of(context).removeAcceptance(
-            widget.storyCluster.id,
-          );
+        widget.storyCluster.id,
+      );
     } else if (!_inTimeline) {
       StoryClusterDragStateModel.of(context).addAcceptance(
-            widget.storyCluster.id,
-          );
+        widget.storyCluster.id,
+      );
     }
 
     if (_inTimeline) {
@@ -258,8 +257,7 @@ class _PanelDragTargetsState extends TickingState<PanelDragTargets> {
                   () {
                     _candidatesValid = true;
                     _candidateValidityTimer = null;
-                    StoryClusterDragStateModel
-                        .of(context)
+                    StoryClusterDragStateModel.of(context)
                         .addAcceptance(widget.storyCluster.id);
                   },
                 );
@@ -321,12 +319,12 @@ class _PanelDragTargetsState extends TickingState<PanelDragTargets> {
     List<PanelDragTarget> validTargets = _targets
         .where(
           (PanelDragTarget target) => !storyClusterCandidates.keys.every(
-                (StoryCluster key) =>
-                    !target.canAccept(key.realStories.length) ||
-                    !target.isValidInDirection(
-                      _trackedCandidates[key.id].dragDirection,
-                    ),
-              ),
+            (StoryCluster key) =>
+                !target.canAccept(key.realStories.length) ||
+                !target.isValidInDirection(
+                  _trackedCandidates[key.id].dragDirection,
+                ),
+          ),
         )
         .toList();
 
@@ -339,27 +337,26 @@ class _PanelDragTargetsState extends TickingState<PanelDragTargets> {
     return new ScopedModelDescendant<DebugModel>(
       builder: (BuildContext context, Widget child, DebugModel debugModel) =>
           new TargetInfluenceOverlay(
-            enabled:
-                debugModel.showTargetInfluenceOverlay && candidates.isNotEmpty,
-            targets: validTargets,
-            dragDirection: influenceDragDirection,
-            closestTargetGetter: (Offset point) => _getClosestTarget(
-                  influenceDragDirection,
-                  point,
-                  storyClusterCandidates.keys.isNotEmpty
-                      ? storyClusterCandidates.keys.first
-                      : null,
-                  false,
-                ),
-            child: new TargetOverlay(
-              enabled: debugModel.showTargetOverlay,
-              targets: validTargets,
-              closestTargetLockPoints:
-                  _trackedCandidates.values.map(CandidateInfo.toPoint).toList(),
-              candidatePoints: candidates.values.toList(),
-              child: child,
-            ),
-          ),
+        enabled: debugModel.showTargetInfluenceOverlay && candidates.isNotEmpty,
+        targets: validTargets,
+        dragDirection: influenceDragDirection,
+        closestTargetGetter: (Offset point) => _getClosestTarget(
+          influenceDragDirection,
+          point,
+          storyClusterCandidates.keys.isNotEmpty
+              ? storyClusterCandidates.keys.first
+              : null,
+          false,
+        ),
+        child: new TargetOverlay(
+          enabled: debugModel.showTargetOverlay,
+          targets: validTargets,
+          closestTargetLockPoints:
+              _trackedCandidates.values.map(CandidateInfo.toPoint).toList(),
+          candidatePoints: candidates.values.toList(),
+          child: child,
+        ),
+      ),
       child: new Transform(
         transform: new Matrix4.identity().scaled(_scale, _scale),
         alignment: FractionalOffset.center,
@@ -477,8 +474,8 @@ class _PanelDragTargetsState extends TickingState<PanelDragTargets> {
       CandidateInfo candidateInfo = _trackedCandidates[data.id];
 
       StoryCluster storyCluster = StoryModel.of(context).getStoryCluster(
-            data.id,
-          );
+        data.id,
+      );
       PanelDragTarget closestTarget = _getClosestTarget(
         candidateInfo.dragDirection,
         storyClusterPoint,
@@ -516,7 +513,7 @@ class _PanelDragTargetsState extends TickingState<PanelDragTargets> {
     StoryCluster storyCluster,
     bool initialTarget,
   ) {
-    double minScore = double.INFINITY;
+    double minScore = double.infinity;
     PanelDragTarget closestTarget;
     _targets
         .where((PanelDragTarget target) => storyCluster == null

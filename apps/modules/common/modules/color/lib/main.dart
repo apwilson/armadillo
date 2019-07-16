@@ -33,7 +33,7 @@ void main() {
             _log('JSON: $json');
             // Expects Link to look something like this:
             // { "color" : 255 } or { "color" : '0xFF1DE9B6' }
-            final dynamic doc = JSON.decode(json);
+            final dynamic doc = json.decode(json);
             if (doc is Map && (doc['color'] is int || doc['color'] is String)) {
               int num = parseInt(doc['color']);
               colorWidgetKey.currentState.color = new Color(num);

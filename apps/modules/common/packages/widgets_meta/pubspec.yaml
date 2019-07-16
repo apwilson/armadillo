@@ -3,5 +3,9 @@
 # found in the LICENSE file.
 
 name: widgets_meta
+
+environment:
+  sdk: "<3.0.0"
+
 description: A collection of meta annotation classes for UI spec generation.
 dependencies:

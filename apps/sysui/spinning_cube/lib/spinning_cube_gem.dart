@@ -11,13 +11,13 @@ import 'package:vector_math/vector_math_64.dart';
 
 const double _kGemCornerRadius = 16.0;
 const double _kGemOpacity = 1.0;
-const double _kFaceRotation = math.PI / 2.0;
-const double _kPerspectiveFieldOfViewRadians = math.PI / 6.0;
+const double _kFaceRotation = math.pi / 2.0;
+const double _kPerspectiveFieldOfViewRadians = math.pi / 6.0;
 const double _kPerspectiveNearZ = 100.0;
 const double _kPerspectiveAspectRatio = 1.0;
 const double _kCubeScaleFactor = 50.0;
-const double _kCubeAnimationYRotation = 2.0 * math.PI;
-const double _kCubeAnimationXRotation = 6.0 * math.PI;
+const double _kCubeAnimationYRotation = 2.0 * math.pi;
+const double _kCubeAnimationXRotation = 6.0 * math.pi;
 
 /// Creates a spinning unicolor cube with rounded corners.
 class SpinningCubeGem extends StatelessWidget {
@@ -67,67 +67,67 @@ class SpinningCubeGem extends StatelessWidget {
             child: new AnimatedBuilder(
               animation: controller,
               builder: (BuildContext context, Widget child) => new Stack(
-                    children: <Widget>[
-                      // Right face.
-                      _createRoundedCubeFace(
-                        faceTranslation: new Matrix4.translationValues(
-                          halfFaceSize,
-                          0.0,
-                          0.0,
-                        ),
-                        faceRotation: new Matrix4.rotationY(_kFaceRotation),
-                        cubePerspective: cubePerspective,
-                        gemSize: gemSize,
-                      ),
-                      // Left face.
-                      _createRoundedCubeFace(
-                        faceTranslation: new Matrix4.translationValues(
-                            -halfFaceSize, 0.0, 0.0),
-                        faceRotation: new Matrix4.rotationY(_kFaceRotation),
-                        cubePerspective: cubePerspective,
-                        gemSize: gemSize,
-                      ),
-                      // Back face.
-                      _createRoundedCubeFace(
-                        faceTranslation: new Matrix4.translationValues(
-                          0.0,
-                          0.0,
-                          halfFaceSize,
-                        ),
-                        cubePerspective: cubePerspective,
-                        gemSize: gemSize,
-                      ),
-                      // Front face.
-                      _createRoundedCubeFace(
-                        faceTranslation: new Matrix4.translationValues(
-                            0.0, 0.0, -halfFaceSize),
-                        cubePerspective: cubePerspective,
-                        gemSize: gemSize,
-                      ),
-                      // Bottom face.
-                      _createRoundedCubeFace(
-                        faceTranslation: new Matrix4.translationValues(
-                          0.0,
-                          halfFaceSize,
-                          0.0,
-                        ),
-                        faceRotation: new Matrix4.rotationX(_kFaceRotation),
-                        cubePerspective: cubePerspective,
-                        gemSize: gemSize,
-                      ),
-                      // Top face.
-                      _createRoundedCubeFace(
-                        faceTranslation: new Matrix4.translationValues(
-                          0.0,
-                          -halfFaceSize,
-                          0.0,
-                        ),
-                        faceRotation: new Matrix4.rotationX(_kFaceRotation),
-                        cubePerspective: cubePerspective,
-                        gemSize: gemSize,
-                      ),
-                    ],
+                children: <Widget>[
+                  // Right face.
+                  _createRoundedCubeFace(
+                    faceTranslation: new Matrix4.translationValues(
+                      halfFaceSize,
+                      0.0,
+                      0.0,
+                    ),
+                    faceRotation: new Matrix4.rotationY(_kFaceRotation),
+                    cubePerspective: cubePerspective,
+                    gemSize: gemSize,
                   ),
+                  // Left face.
+                  _createRoundedCubeFace(
+                    faceTranslation:
+                        new Matrix4.translationValues(-halfFaceSize, 0.0, 0.0),
+                    faceRotation: new Matrix4.rotationY(_kFaceRotation),
+                    cubePerspective: cubePerspective,
+                    gemSize: gemSize,
+                  ),
+                  // Back face.
+                  _createRoundedCubeFace(
+                    faceTranslation: new Matrix4.translationValues(
+                      0.0,
+                      0.0,
+                      halfFaceSize,
+                    ),
+                    cubePerspective: cubePerspective,
+                    gemSize: gemSize,
+                  ),
+                  // Front face.
+                  _createRoundedCubeFace(
+                    faceTranslation:
+                        new Matrix4.translationValues(0.0, 0.0, -halfFaceSize),
+                    cubePerspective: cubePerspective,
+                    gemSize: gemSize,
+                  ),
+                  // Bottom face.
+                  _createRoundedCubeFace(
+                    faceTranslation: new Matrix4.translationValues(
+                      0.0,
+                      halfFaceSize,
+                      0.0,
+                    ),
+                    faceRotation: new Matrix4.rotationX(_kFaceRotation),
+                    cubePerspective: cubePerspective,
+                    gemSize: gemSize,
+                  ),
+                  // Top face.
+                  _createRoundedCubeFace(
+                    faceTranslation: new Matrix4.translationValues(
+                      0.0,
+                      -halfFaceSize,
+                      0.0,
+                    ),
+                    faceRotation: new Matrix4.rotationX(_kFaceRotation),
+                    cubePerspective: cubePerspective,
+                    gemSize: gemSize,
+                  ),
+                ],
+              ),
             ),
           );
         },

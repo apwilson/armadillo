@@ -37,8 +37,7 @@ class YoutubeCommentsList extends StatefulWidget {
     Key key,
     @required @ExampleValue(kExampleVideoId) this.videoId,
     @required @ConfigKey('google_api_key') this.apiKey,
-  })
-      : super(key: key) {
+  }) : super(key: key) {
     assert(videoId != null);
     assert(apiKey != null);
   }
@@ -68,7 +67,7 @@ class _YoutubeCommentsListState extends State<YoutubeCommentsList> {
     if (response.statusCode != 200) {
       return null;
     }
-    dynamic jsonData = JSON.decode(response.body);
+    dynamic jsonData = json.decode(response.body);
 
     if (jsonData['items'] is List<dynamic>) {
       return jsonData['items']

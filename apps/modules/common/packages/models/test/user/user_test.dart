@@ -15,7 +15,7 @@ void main() {
     User user = fixtures.user();
 
     String encoded = JSON.encode(user);
-    Map<String, dynamic> json = JSON.decode(encoded);
+    Map<String, dynamic> json = json.decode(encoded);
     User hydrated = new User.fromJson(json);
 
     expect(hydrated.id, equals(user.id));

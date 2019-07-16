@@ -36,7 +36,7 @@ longestPath(Graph g) {
       return dfs(e.w) - g.edgeObj(e)["minlen"];
     }));
 
-    if (rank == double.INFINITY) {
+    if (rank == double.infinity) {
       rank = 0;
     }
 
